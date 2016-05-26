@@ -33,9 +33,7 @@ Still looking for a good driver. Any recommendations are helpful.
 
 # Usage
 
-```
-#!javascript
-
+``` javascript
 //Config opts
 
 var opts = {
@@ -95,9 +93,7 @@ node-webcam --w 500 --h 500 --d 2 --l picture
 
 ###API Usage
 
-```
-!#javascript
-
+``` javascript
 //Available in nodejs
 
 var NodeWebcam = require( "node-webcam" );
