@@ -13,7 +13,6 @@ var Webcam = require( __dirname + "/../Webcam.js" );
 var Utils = require( __dirname + "/../utils/Utils.js" );
 
 
-
 //Main class
 
 function FSWebcam( options ) {

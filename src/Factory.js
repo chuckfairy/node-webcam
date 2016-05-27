@@ -29,7 +29,7 @@ var Factory = new function() {
 
         if( ! Type ) {
 
-            throw new Error( "Sorry, no webcam type specified yet for " + Platform );
+            throw new Error( "Sorry, no webcam type specified yet for platform " + Platform );
 
         }
 

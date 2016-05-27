@@ -61,11 +61,25 @@ Webcam.prototype = {
 
         var fileType = Webcam.OutputTypes[ scope.opts.output ];
 
-        location = location + "." + fileType;
+        var location = location || "";
+
+        location = location.match( /\..*$/ )
+            ? location
+            : location + "." + fileType;
+
+
+        //Shell statement grab
 
         var sh = scope.generateSh( location );
 
-        console.log( sh );
+        if( scope.opts.verbose ) {
+
+            console.log( sh );
+
+        }
+
+
+        //Shell execute
 
         EXEC( sh, function( err, out, derr ) {
 

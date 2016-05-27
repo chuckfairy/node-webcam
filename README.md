@@ -17,8 +17,7 @@ sudo apt-get install fswebcam
 ###Mac OSX
 
 ```
-#Mac OSX will rely on imagesnap
-#Currently not supported
+#Mac OSX relies on imagesnap
 #Repo https://github.com/rharder/imagesnap
 #Avaliable through brew
 
@@ -123,12 +122,41 @@ var Webcam = NodeWebcam.create( opts );
 //Will automatically append location output type
 
 Webcam.capture( "test_picture" );
+```
 
+#Classes
+
+###NodeWebcam
+
+Main require used. Also has helper functions just for you.
+
+####NodeWebcam.create( Object options )
+
+Main factory creation of a webcam for use. Uses NodeWebcam.Factory to create.
+
+```javascript
+//Default options defined in API usage
+
+var NodeWebcam = require( "node-webcam" );
+
+var Webcam = NodeWebcam.create({});
+```
+
+###NodeWebcam.capture( String location, Object options, Function callback )
+
+Quick helper for taking pictures via one function. Will return Webcam instance via NodeWebcam.create.
+
+```javascript
+NodeWebcam.capture( "my_picture", {}, function() {
+
+    console.log( "Image created!" );
+
+});
 ```
 
 #What's next?
 
-* Mac OSX, and windows support
+* Windows support
 * Video capture functionality
 * Battle testing
 * What do you want to see? Leave an issue on the github page!

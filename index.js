@@ -21,13 +21,39 @@ var NodeWebcam = {
 
 //API
 
-NodeWebcam.create = function( options ) {
 
-    console.log( NodeWebcam.Factory );
+
+/**
+ * Main create
+ *
+ * @param Object options
+ *
+ */
+NodeWebcam.create = function( options ) {
 
     return NodeWebcam.Factory.create( options );
 
 };
+
+
+/**
+ * Quick capture helper
+ *
+ * @param String location
+ * @param Object options
+ * @param Function callback
+ *
+ */
+NodeWebcam.capture = function( location, options, callback ) {
+
+    var webcam = NodeWebcam.create( options );
+
+    webcam.capture( location, callback );
+
+    return webcam;
+
+};
+
 
 
 //Export

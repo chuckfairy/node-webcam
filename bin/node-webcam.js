@@ -63,8 +63,6 @@ var shorthand = {
 
 var parsedOpts = Nopt( opts, shorthand, process.argv, 2 );
 
-console.log( "PARSED OPTIONS ", parsedOpts );
-
 
 //Main
 
@@ -96,7 +94,7 @@ function main() {
 
     if( ! parsedOpts.location ) {
 
-        console.log( "No file location specified. QUITING" );
+        console.log( "No file location specified. Please use with --l or --location FILE_NAME. QUITING" );
 
         return;
 
@@ -105,11 +103,7 @@ function main() {
 
     //Main capture
 
-    console.log( NodeWebcam );
-
-    var Webcam = NodeWebcam.create( parsedOpts );
-
-    Webcam.capture( parsedOpts.location, function() {
+    NodeWebcam.capture( parsedOpts.location, parsedOpts, function() {
 
         console.log( "Webcam took picture" );
 
