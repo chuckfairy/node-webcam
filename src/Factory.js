@@ -23,9 +23,11 @@ var Factory = new function() {
 
     //Main Class get
 
-    scope.create = function( options ) {
+    scope.create = function( options, type ) {
 
-        var Type = Factory.Types[ Platform ];
+        var p = type || Platform;
+
+        var Type = Factory.Types[ p ];
 
         if( ! Type ) {
 
@@ -46,7 +48,9 @@ Factory.Types = {
 
     linux: FSWebcam,
 
-    darwin: ImageSnapWebcam
+    darwin: ImageSnapWebcam,
+
+    fswebcam: FSWebcam
 
 };
 

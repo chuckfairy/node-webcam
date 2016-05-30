@@ -21,6 +21,8 @@ var opts = {
 
     delay: [ Number, 0 ],
 
+    device: [ String, false ],
+
     quality: [ Number, 100 ],
 
     output: [ String, "jpeg" ],
@@ -44,15 +46,17 @@ var shorthand = {
 
     h: [ "--height" ],
 
-    d: [ "--delay" ],
+    D: [ "--delay" ],
+
+    d: [ "--device" ],
 
     q: [ "--quality" ],
 
     out: [ "--output" ],
 
-    h: [ "--help", true ],
+    h: [ "--help" ],
 
-    v: [ "--version", true ],
+    v: [ "--version" ],
 
     l: [ "--location" ]
 

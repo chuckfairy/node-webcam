@@ -84,5 +84,6 @@ ImageSnapWebcam.Defaults = {
 };
 
 
+//Export
 
 module.exports = ImageSnapWebcam;

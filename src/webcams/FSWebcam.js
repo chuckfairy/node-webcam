@@ -55,11 +55,16 @@ FSWebcam.prototype.generateSh = function( location ) {
         ? "-D " + scope.opts.delay
         : "";
 
+    var device = scope.opts.device
+        ? "-d " + scope.opts.device
+        : "";
+
     var sh = scope.bin + " "
         + resolution + " "
         + output + " "
         + quality + " "
         + delay + " "
+        + device + " "
         + location;
 
     return sh;
@@ -72,5 +77,6 @@ FSWebcam.prototype.generateSh = function( location ) {
 FSWebcam.Defaults = {};
 
 
+//Export
 
 module.exports = FSWebcam;

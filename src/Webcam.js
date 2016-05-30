@@ -132,6 +132,8 @@ Webcam.Defaults = {
 
     output: "jpeg",
 
+    device: false,
+
     verbose: true
 
 };
