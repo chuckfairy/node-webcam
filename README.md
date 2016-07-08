@@ -27,7 +27,7 @@ brew install imagesnap
 
 ###Windows
 
-Still looking for a good driver. Any recommendations are helpful.
+Standalone exe included. See src/bindings/CommandCam
 
 
 # Usage
