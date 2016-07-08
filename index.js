@@ -6,7 +6,7 @@
 
 var NodeWebcam = {
 
-    REVISION: 2,
+    REVISION: 3,
 
     Factory: require( __dirname + "/src/Factory.js" ),
 

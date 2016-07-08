@@ -145,7 +145,9 @@ Webcam.OutputTypes = {
 
     "jpeg": "jpg",
 
-    "png": "png"
+    "png": "png",
+
+    "bmp": "bmp"
 
 };
 

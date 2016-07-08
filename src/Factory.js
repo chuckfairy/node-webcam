@@ -13,6 +13,8 @@ var FSWebcam = require( __dirname + "/webcams/FSWebcam.js" );
 
 var ImageSnapWebcam = require( __dirname + "/webcams/ImageSnapWebcam.js" );
 
+var WindowsWebcam = require( __dirname + "/webcams/WindowsWebcam.js" );
+
 
 //Main singleton
 
@@ -50,7 +52,11 @@ Factory.Types = {
 
     darwin: ImageSnapWebcam,
 
-    fswebcam: FSWebcam
+    fswebcam: FSWebcam,
+
+    win32: WindowsWebcam,
+
+    win64: WindowsWebcam
 
 };
 
