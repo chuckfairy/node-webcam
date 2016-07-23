@@ -126,11 +126,11 @@ Webcam.capture( "test_picture" );
 
 #Classes
 
-###NodeWebcam
+##NodeWebcam
 
 Main require used. Also has helper functions just for you.
 
-####NodeWebcam.create( Object options )
+###NodeWebcam.create( Object options )
 
 Main factory creation of a webcam for use. Uses NodeWebcam.Factory to create.
 
@@ -153,6 +153,57 @@ NodeWebcam.capture( "my_picture", {}, function() {
 
 });
 ```
+
+##Webcams
+
+Base webcam class in which all other cameras inherit from
+
+###Webcam.constructor( Object options )
+
+```javascript
+//Default options and basic usage
+
+var opts = {
+
+    width: 1280,
+
+    height: 720,
+
+    delay: 0,
+
+    quality: 100,
+
+    output: "jpeg",
+
+    device: false,
+
+    verbose: true
+
+}
+
+var cam = new Webcam( opts );
+```
+
+###Webcam.clone()
+
+###Webcam.clear()
+
+Reset data and memory of past shots
+
+###Webcam.capture( String location, Object options, Function callback )
+
+Will return the location of the image. This function will auto append the output type if not specified in file name.
+
+
+###Webcam.getShot( Number shot, Function callback )
+
+###Webcam.getLastShot( Function callback )
+
+###Webcam.getBase64( Number|Buffer shot, Function callback )
+
+Get base 64 of shot number or data already grabbed from FS.
+
+
 
 #What's next?
 

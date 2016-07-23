@@ -4,13 +4,16 @@
  */
 "use strict";
 
+var CHILD_PROCESS = require('child_process');
+
+var EXEC = CHILD_PROCESS.exec;
+
+var FS = require( "fs" );
+
 var Utils = require( __dirname + "/utils/Utils.js" );
 
 var EventDispatcher = require( __dirname + "/utils/EventDispatcher.js" );
 
-var CHILD_PROCESS = require('child_process');
-
-var EXEC = CHILD_PROCESS.exec;
 
 
 //Main Class
@@ -18,6 +21,8 @@ var EXEC = CHILD_PROCESS.exec;
 function Webcam( options ) {
 
     var scope = this;
+
+    scope.shots = [];
 
     scope.opts = Utils.setDefaults( options, Webcam.Defaults );
 
@@ -33,6 +38,11 @@ Webcam.prototype = {
     opts: {},
 
 
+    //picture shots
+
+    shots: [],
+
+
     /**
      * Basic clone
      *
@@ -43,6 +53,20 @@ Webcam.prototype = {
     clone: function() {
 
         return new this.constructor( this.opts );
+
+    },
+
+
+    /**
+     * Clear data
+     *
+     */
+
+    clear: function() {
+
+        var scope = this;
+
+        scope.shots = [];
 
     },
 
@@ -100,6 +124,8 @@ Webcam.prototype = {
 
             //Callbacks
 
+            scope.shots.push( location );
+
             scope.dispatch({ type: "capture" });
 
             callback && callback( location );
@@ -111,7 +137,100 @@ Webcam.prototype = {
 
     //@Override
 
-    generateSh: function( location ) { return ""; }
+    generateSh: function( location ) { return ""; },
+
+
+    /**
+     * Get shot buffer from location
+     * 0 indexed
+     *
+     * @param Number shot
+     * @param Function callback
+     *
+     * @return Boolean
+     *
+     * @callback( FS.readFile data )
+     *
+     */
+
+    getShot: function( shot, callback ) {
+
+        var scope = this;
+
+        var shotLocation = scope.shots[ shot ];
+
+        if( ! shotLocation ) { return false; }
+
+        FS.readFile( shotLocation, function( err, data ) {
+
+            if( err ) { throw err; }
+
+            callback && callback( data );
+
+        });
+
+        return true;
+
+    },
+
+
+    /**
+     * Get last shots image data
+     *
+     * @param Function callback
+     *
+     * @return Boolean
+     *
+     */
+
+    getLastShot: function( callback ) {
+
+        var scope = this;
+
+        return scope.getShot( scope.shots.length - 1, callback );
+
+    },
+
+
+    /**
+     * Get shot base64 as image
+     * if passed Number will return a base 64 in the callback
+     *
+     * @param Number|FS.readFile shot
+     * @param Function callback
+     *
+     * @return Boolean|String
+     *
+     */
+
+    getBase64: function( shot, callback ) {
+
+        var scope = this;
+
+
+        //Typeof number for a getShot callback
+
+        if( typeof( shot ) === "number" ) {
+
+            scope.getShot( shot, function( data ) {
+
+                callback( scope.getBase64( data ) );
+
+            });
+
+            return true;
+
+        }
+
+
+        //Data use
+
+        return "data:image/"
+            + scope.opts.output
+            + ";base64,"
+            + new Buffer( shot ).toString( "base64" );
+
+    }
 
 };
 
