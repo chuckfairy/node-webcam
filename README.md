@@ -1,6 +1,6 @@
 # node-webcam
 
-Future Cross platform webcam usage. Currently only Linux support.
+Cross platform webcam usage
 
 # Install
 
