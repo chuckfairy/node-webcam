@@ -14,6 +14,7 @@ var Utils = require( __dirname + "/utils/Utils.js" );
 
 var EventDispatcher = require( __dirname + "/utils/EventDispatcher.js" );
 
+var CameraUtils = require( __dirname + "/utils/CameraUtils.js" );
 
 
 //Main Class
@@ -69,6 +70,18 @@ Webcam.prototype = {
         scope.shots = [];
 
     },
+
+
+    /**
+     * List available cameras
+     *
+     * @param Function callback
+     *
+     * @callback( Array cameras )
+     *
+     */
+
+    list: CameraUtils.getCameras,
 
 
     /**

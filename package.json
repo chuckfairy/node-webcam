@@ -1,6 +1,6 @@
 {
     "name": "node-webcam",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "Cross platform webcam capture",
     "main": "index.js",
     "scripts": {
@@ -15,7 +15,9 @@
         "nodejs",
         "node",
         "capture",
-        "cli"
+        "cli",
+        "camera",
+        "webcamera"
     ],
     "author": "chuckfairy",
     "license": "MIT",
@@ -26,5 +28,8 @@
     "homepage": "https://github.com/chuckfairy/node-webcam#readme",
     "dependencies": {
         "nopt": "*"
+    },
+    "devDependencies": {
+        "async": "*"
     }
 }

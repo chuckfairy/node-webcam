@@ -2,9 +2,9 @@
 
 Future Cross platform webcam usage. Currently only Linux support.
 
-#Install
+# Install
 
-###Linux
+### Linux
 
 ```
 #Linux relies on fswebcam currently
@@ -14,7 +14,7 @@ sudo apt-get install fswebcam
 
 ```
 
-###Mac OSX
+### Mac OSX
 
 ```
 #Mac OSX relies on imagesnap
@@ -25,7 +25,7 @@ brew install imagesnap
 
 ```
 
-###Windows
+### Windows
 
 Standalone exe included. See src/bindings/CommandCam
 
@@ -81,7 +81,7 @@ var shorthand = {
 };
 ```
 
-###Shell Usage
+### Shell Usage
 
 ```
 #node-webcam will auto output the file type at the end
@@ -90,7 +90,7 @@ node-webcam --w 500 --h 500 --d 2 --l picture
 
 ```
 
-###API Usage
+### API Usage
 
 ``` javascript
 //Available in nodejs
@@ -124,13 +124,13 @@ var Webcam = NodeWebcam.create( opts );
 Webcam.capture( "test_picture" );
 ```
 
-#Classes
+# Classes
 
-##NodeWebcam
+## NodeWebcam
 
 Main require used. Also has helper functions just for you.
 
-###NodeWebcam.create( Object options )
+### NodeWebcam.create( Object options )
 
 Main factory creation of a webcam for use. Uses NodeWebcam.Factory to create.
 
@@ -142,7 +142,7 @@ var NodeWebcam = require( "node-webcam" );
 var Webcam = NodeWebcam.create({});
 ```
 
-###NodeWebcam.capture( String location, Object options, Function callback )
+### NodeWebcam.capture( String location, Object options, Function callback )
 
 Quick helper for taking pictures via one function. Will return Webcam instance via NodeWebcam.create.
 
@@ -154,11 +154,11 @@ NodeWebcam.capture( "my_picture", {}, function() {
 });
 ```
 
-##Webcams
+## Webcams
 
 Base webcam class in which all other cameras inherit from
 
-###Webcam.constructor( Object options )
+### Webcam.constructor( Object options )
 
 ```javascript
 //Default options and basic usage
@@ -184,30 +184,41 @@ var opts = {
 var cam = new Webcam( opts );
 ```
 
-###Webcam.clone()
+### Webcam.clone()
 
-###Webcam.clear()
+### Webcam.clear()
 
 Reset data and memory of past shots
 
-###Webcam.capture( String location, Object options, Function callback )
+### Webcam.capture( String location, Object options, Function callback )
 
 Will return the location of the image. This function will auto append the output type if not specified in file name.
 
 
-###Webcam.getShot( Number shot, Function callback )
+### Webcam.getShot( Number shot, Function callback )
 
-###Webcam.getLastShot( Function callback )
+### Webcam.getLastShot( Function callback )
 
-###Webcam.getBase64( Number|Buffer shot, Function callback )
+### Webcam.getBase64( Number|Buffer shot, Function callback )
 
 Get base 64 of shot number or data already grabbed from FS.
 
+### FSWebcam
 
+Uses the fswebcam program. Available in linux (apt-get install fswebca). Extra program addons provided in options.
 
-#What's next?
+```javascript
+var NodeWebcam = require( "node-webcam" );
 
-* Windows support
+var FSWebcam = NodeWebcam.FSWebcam; //require( "node-webcam/webcams/FSWebcam" );
+
+var opts = {};
+
+var cam = new FSWebcam( opts );
+```
+
+# What's next?
+
 * Video capture functionality
 * Battle testing
 * What do you want to see? Leave an issue on the github page!

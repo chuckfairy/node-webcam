@@ -74,7 +74,18 @@ FSWebcam.prototype.generateSh = function( location ) {
 
 //Defaults
 
-FSWebcam.Defaults = {};
+FSWebcam.Defaults = {
+
+    topBanner: false,
+
+    bottomBanner: false,
+
+    title: false,
+
+    subTitle: false,
+
+    timestamp: false
+};
 
 
 //Export

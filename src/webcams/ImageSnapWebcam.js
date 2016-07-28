@@ -75,6 +75,29 @@ ImageSnapWebcam.prototype.generateSh = function( location ) {
 };
 
 
+/**
+ * @Override
+ *
+ * Webcam list
+ *
+ * @param Function callback
+ *
+ */
+ImageSnapWebcam.prototype.list = function( callback ) {
+
+    var scope = this;
+
+    var sh = scope.bin + " -l";
+
+    EXEC( sh, function( err, data, out ) {
+
+        console.log( data, out );
+
+    });
+
+};
+
+
 //Defaults
 
 ImageSnapWebcam.Defaults = {

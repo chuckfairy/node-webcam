@@ -6,6 +6,8 @@
 
 var NodeWebcam = {
 
+    version: "0.3.2",
+
     REVISION: 3,
 
     Factory: require( __dirname + "/src/Factory.js" ),
@@ -14,7 +16,9 @@ var NodeWebcam = {
 
     FSWebcam: require( __dirname + "/src/webcams/FSWebcam.js" ),
 
-    ImageSnapWebcam: require( __dirname + "/src/webcams/ImageSnapWebcam.js" )
+    ImageSnapWebcam: require( __dirname + "/src/webcams/ImageSnapWebcam.js" ),
+
+    WindowsWebcam: require( __dirname + "/src/webcams/WindowsWebcam.js" )
 
 };
 

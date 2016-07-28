@@ -8,6 +8,10 @@
  */
 "use strict";
 
+var CHILD_PROCESS = require('child_process');
+
+var EXEC = CHILD_PROCESS.exec;
+
 var Webcam = require( __dirname + "/../Webcam.js" );
 
 var Utils = require( __dirname + "/../utils/Utils.js" );
@@ -69,6 +73,29 @@ WindowsWebcam.prototype.generateSh = function( location ) {
 
 };
 
+
+/**
+ * List webcam devices using bin
+ *
+ * @param Function callback
+ *
+ */
+
+WindowsWebcam.prototype.list = function( callback ) {
+
+    var scope = this;
+
+    var sh = scope.bin + " /devlist";
+
+    EXEC( sh, function( err, out, out2 ) {
+
+        console.log( out, out2 );
+
+        callback && callback( [] );
+
+    });
+
+};
 
 //Defaults
 

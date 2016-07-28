@@ -4,8 +4,6 @@
  */
 var OS = require( "os" );
 
-var Platform = OS.platform();
-
 
 //Webcam types
 
@@ -27,13 +25,13 @@ var Factory = new function() {
 
     scope.create = function( options, type ) {
 
-        var p = type || Platform;
+        var p = type || Factory.Platform;
 
         var Type = Factory.Types[ p ];
 
         if( ! Type ) {
 
-            throw new Error( "Sorry, no webcam type specified yet for platform " + Platform );
+            throw new Error( "Sorry, no webcam type specified yet for platform " + p );
 
         }
 
@@ -43,6 +41,8 @@ var Factory = new function() {
 
 };
 
+
+Factory.Platform = OS.platform();
 
 //OS Webcam types
 
