@@ -6,7 +6,11 @@
 
 var NodeWebcam = require( __dirname + "/../index.js" );
 
+var Path = require( "path" );
+
 var Async = require( "async" );
+
+var List = [];
 
 
 //Main test sequence
@@ -17,6 +21,9 @@ describe( "Webcam List", function() {
     //Default webcam list
 
     it( "Should list all availible cameras", listTest );
+
+
+    it( "Should capture each device", deviceCheck );
 
 });
 
@@ -31,9 +38,10 @@ function listTest( done ) {
 
         console.log( "Camera List", list );
 
+        List = list;
+
         done();
 
-        it( "Should capture each device", deviceCheck( Webcam, list ) );
 
     });
 
@@ -42,30 +50,35 @@ function listTest( done ) {
 
 //use each camera
 
-function deviceCheck( Webcam, list ) {
+function deviceCheck( done ) {
 
-    var ll = list.length;
+    this.timeout( 6000 );
 
-    var captureFunc = [];
+    var Webcam = NodeWebcam.Factory.create({});
 
-    for( var i = 0; i < ll; i ++ ) {
+    var url = Path.resolve( __dirname, "output", "test_image" );
 
-        var device = list[ i ];
+     var index = 0;
+
+
+    //Main device capture
+
+    function captureFunc( device, callback ) {
 
         Webcam.opts.device = device;
 
-        captureFunc.push( Webcam.capture.bind( Webcam ) );
+        var urlDevice = url + "_" + index;
+
+        Webcam.capture( urlDevice, callback );
+
+        index++;
 
     }
 
-    //async.map(
-
-    return function( done ) {
-
-        this.timeout( 6000 );
+    Async.mapSeries( List, captureFunc, function() {
 
         done();
 
-    }
+    });
 
 }

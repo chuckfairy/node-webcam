@@ -8,6 +8,10 @@
  */
 "use strict";
 
+var CHILD_PROCESS = require('child_process');
+
+var EXEC = CHILD_PROCESS.exec;
+
 var Webcam = require( __dirname + "/../Webcam.js" );
 
 var Utils = require( __dirname + "/../utils/Utils.js" );
@@ -65,8 +69,13 @@ ImageSnapWebcam.prototype.generateSh = function( location ) {
         ? "-w " + scope.opts.delay
         : "";
 
+    var device = scope.opts.device
+        ? "-d '" + scope.opts.device + "'"
+        : "";
+
     var sh = scope.bin + " "
         + delay + " "
+        + device + " "
         + verbose + " "
         + location;
 
@@ -89,9 +98,29 @@ ImageSnapWebcam.prototype.list = function( callback ) {
 
     var sh = scope.bin + " -l";
 
+    var cams = [];
+
     EXEC( sh, function( err, data, out ) {
 
-        console.log( data, out );
+        var lines = data.split( "\n" );
+
+        var ll = lines.length;
+
+        for( var i = 0; i < ll; i ++ ) {
+
+            var line = lines[ i ];
+
+            if( line === "Video Devices:" || ! line ) {
+
+                continue;
+
+            }
+
+            cams.push( line );
+
+        }
+
+        callback && callback( cams );
 
     });
 
