@@ -57,7 +57,7 @@ WindowsWebcam.prototype.generateSh = function( location ) {
     var scope = this;
 
     var device = scope.opts.device
-        ? "/devnum" + scope.opts.device
+        ? "/devnum " + scope.opts.device
         : "";
 
     var delay = scope.opts.delay
@@ -87,11 +87,37 @@ WindowsWebcam.prototype.list = function( callback ) {
 
     var sh = scope.bin + " /devlist";
 
-    EXEC( sh, function( err, out, out2 ) {
+    var cams = [];
 
-        console.log( out, out2 );
+    EXEC( sh, function( err, data, out ) {
 
-        callback && callback( [] );
+        if( err ) { throw err; }
+
+        var lines = out.split( "\n" );
+
+        var ll = lines.length;
+
+        var camNum = 1;
+
+        for( var i = 0; i < ll; i ++ ) {
+
+            var line = lines[ i ];
+            line = line.replace( "\r", "" );
+
+            if(
+                !! line
+                && line !== "Available capture devices:"
+                && "No video devices found"
+            ) {
+
+                cams.push( camNum.toString() );
+                camNum++;
+
+            }
+
+        }
+
+        callback && callback( cams );
 
     });
 

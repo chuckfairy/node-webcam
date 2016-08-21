@@ -65,11 +65,17 @@ function deviceCheck( done ) {
 
     function captureFunc( device, callback ) {
 
+        console.log( device );
+
         Webcam.opts.device = device;
 
         var urlDevice = url + "_" + index;
 
-        Webcam.capture( urlDevice, callback );
+        Webcam.capture( urlDevice, function() {
+
+            callback();
+
+        });
 
         index++;
 
