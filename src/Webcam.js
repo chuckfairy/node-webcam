@@ -122,9 +122,9 @@ Webcam.prototype = {
 
             if( err ) {
 
-                console.log( derr );
+                callback && callback(err);
 
-                throw err;
+                return;
 
             }
 
@@ -141,7 +141,7 @@ Webcam.prototype = {
 
             scope.dispatch({ type: "capture" });
 
-            callback && callback( location );
+            callback && callback( err, location );
 
         });
 
@@ -172,17 +172,19 @@ Webcam.prototype = {
 
         var shotLocation = scope.shots[ shot ];
 
-        if( ! shotLocation ) { return false; }
+        if( !shotLocation ) {
+
+            callback(new Error("Not found the shot."));
+
+            return;
+
+        }
 
         FS.readFile( shotLocation, function( err, data ) {
 
-            if( err ) { throw err; }
-
-            callback && callback( data );
+            callback && callback( err, data );
 
         });
-
-        return true;
 
     },
 
@@ -200,7 +202,7 @@ Webcam.prototype = {
 
         var scope = this;
 
-        return scope.getShot( scope.shots.length - 1, callback );
+        scope.getShot( scope.shots.length - 1, callback );
 
     },
 
@@ -225,13 +227,19 @@ Webcam.prototype = {
 
         if( typeof( shot ) === "number" ) {
 
-            scope.getShot( shot, function( data ) {
+            scope.getShot( shot, function( err, data ) {
 
-                callback( scope.getBase64( data ) );
+                if (err) {
+
+                    callback(err);
+
+                    return;
+
+                }
+
+                callback( err, scope.getBase64( data ) );
 
             });
-
-            return true;
 
         }
 

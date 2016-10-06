@@ -1,35 +1,38 @@
 {
-    "name": "node-webcam",
-    "version": "0.3.2",
-    "description": "Cross platform webcam capture",
-    "main": "index.js",
-    "scripts": {
-        "test": "mocha test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/chuckfairy/node-webcam.git"
-    },
-    "keywords": [
-        "webcam",
-        "nodejs",
-        "node",
-        "capture",
-        "cli",
-        "camera",
-        "webcamera"
-    ],
-    "author": "chuckfairy",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/chuckfairy/node-webcam/issues"
-    },
-    "bin": { "node-webcam": "bin/node-webcam.js" },
-    "homepage": "https://github.com/chuckfairy/node-webcam#readme",
-    "dependencies": {
-        "nopt": "*"
-    },
-    "devDependencies": {
-        "async": "*"
-    }
+  "name": "node-webcam",
+  "version": "0.3.2",
+  "description": "Cross platform webcam capture",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chuckfairy/node-webcam.git"
+  },
+  "keywords": [
+    "webcam",
+    "nodejs",
+    "node",
+    "capture",
+    "cli",
+    "camera",
+    "webcamera"
+  ],
+  "author": "chuckfairy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chuckfairy/node-webcam/issues"
+  },
+  "bin": {
+    "node-webcam": "bin/node-webcam.js"
+  },
+  "homepage": "https://github.com/chuckfairy/node-webcam#readme",
+  "dependencies": {
+    "nopt": "*"
+  },
+  "devDependencies": {
+    "async": "*",
+    "mocha": "^3.1.0"
+  }
 }

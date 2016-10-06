@@ -24,7 +24,7 @@ describe("Capture", function() {
 
         var url = Path.resolve( __dirname, "output", "test_image" );
 
-        var Webcam = NodeWebcam.capture( url, {}, function( url ) {
+        var Webcam = NodeWebcam.capture( url, {}, function( err, url ) {
 
             console.log( "Image saved to " + url );
 

@@ -107,9 +107,18 @@ function main() {
 
     //Main capture
 
-    NodeWebcam.capture( parsedOpts.location, parsedOpts, function() {
+    NodeWebcam.capture( parsedOpts.location, parsedOpts, function(err) {
+
+        if (err) {
+
+           console.error(err.stack);
+
+           return;
+
+        }
 
         console.log( "Webcam took picture" );
+
 
     });
 

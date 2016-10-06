@@ -33,19 +33,23 @@ function base64Capture( done ) {
 
     var Webcam = NodeWebcam.Factory.create();
 
-    Webcam.capture( url, function( url ) {
+    Webcam.capture( url, function( err, url ) {
 
         console.log( "Image saved to " + url );
 
-        Webcam.getBase64( Webcam.shots.length - 1, function( base64 ) {
+        Webcam.getBase64( Webcam.shots.length - 1, function( err, base64 ) {
 
             var writeLocal = __dirname + "/output/test_image_64.html";
 
             var content = "<img src='" + base64 + "'>";
 
-            FS.writeFile( writeLocal, content, function() {
+            FS.writeFile( writeLocal, content, function( err ) {
 
-                done();
+                if (!err) {
+
+                    done();
+
+                }
 
             });
 
