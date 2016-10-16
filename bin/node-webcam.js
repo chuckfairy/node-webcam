@@ -33,6 +33,14 @@ var opts = {
 
     version: [ Boolean, false ],
 
+    greyscale: [ Boolean, false ],
+
+    rotation: [ String, false ],
+
+    topBanner: [ Boolean, false ],
+
+    bottomBanner: [ Boolean, false ],
+
     location: Path
 
 };
@@ -57,6 +65,10 @@ var shorthand = {
     h: [ "--help" ],
 
     v: [ "--version" ],
+
+    g: [ "--greyscale" ],
+
+    r: [ "--rotation" ],
 
     l: [ "--location" ]
 
@@ -98,7 +110,9 @@ function main() {
 
     if( ! parsedOpts.location ) {
 
-        console.log( "No file location specified. Please use with --l or --location FILE_NAME. QUITING" );
+        help();
+
+        console.log( "\n\nNo file location specified. Please use with --l or --location FILE_NAME. QUITING" );
 
         return;
 

@@ -51,7 +51,7 @@ function ubiquityTest( done ) {
 
     var url = __dirname + "/output/test_image";
 
-    Async.map( types, captureFromCam, done);
+    Async.map( types, captureFromCam, done );
 
     function captureFromCam( type, callback ) {
 

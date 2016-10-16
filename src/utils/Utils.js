@@ -9,7 +9,7 @@ var Utils = {
     setDefaults: function( object, defaults ) {
 
         var defaults = typeof( defaults ) === "object" ? defaults: {};
-        var object = typeof( object ) === "object" ? object : defaults;
+        var object = typeof( object ) === "object" ? object : {};
 
         if( object === defaults ) { return object; }
 
@@ -35,7 +35,8 @@ var Utils = {
     },
 
 
-    //Node-webcam excape string
+    //Node-webcam escape string
+
     escape: function( cmd ) {
 
         return '"' + cmd.replace( /(["\s'$`\\()])/g,'\\$1' ) + '"';

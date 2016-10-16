@@ -59,15 +59,76 @@ FSWebcam.prototype.generateSh = function( location ) {
         ? "-d " + scope.opts.device
         : "";
 
+    var grey = scope.opts.greyscale
+        ? "--greyscale"
+        : "";
+
+    var rotation = scope.opts.rotation
+        ? "--rotate " + scope.opts.rotation
+        : "";
+
+    var banner = ! scope.opts.topBanner && ! scope.opts.bottomBanner
+        ? "--no-banner"
+        : ( scope.opts.topBanner
+            ? "--top-banner"
+            : "--bottom-banner" );
+
+    if( scope.opts.saturation ) {
+
+        scope.opts.setValues.Saturation = scope.opts.saturation;
+
+    }
+
+    var setValues = scope.getControlSetString( scope.opts.setValues );
+
     var sh = scope.bin + " "
         + resolution + " "
         + output + " "
         + quality + " "
         + delay + " "
         + device + " "
+        + grey + " "
+        + rotation + " "
+        + banner + " "
+        + setValues + " "
         + location;
 
     return sh;
+
+};
+
+
+/**
+ * Get control values string
+ *
+ * @param Object setValues
+ *
+ * @returns String
+ *
+ */
+FSWebcam.prototype.getControlSetString = function( setValues ) {
+
+    var str = "";
+
+    if( typeof( setValues ) !== "object" ) {
+
+        return str;
+
+    }
+
+    for( var setName in setValues ) {
+
+        var val = setValues[ setName ];
+
+        if( ! val ) { continue; }
+
+        str += setName + "=" + val;
+
+    }
+
+    return str
+        ?"-s " + str
+        : "";
 
 };
 
@@ -84,7 +145,14 @@ FSWebcam.Defaults = {
 
     subTitle: false,
 
-    timestamp: false
+    timestamp: false,
+
+    greyscale: false,
+
+    saturation: false,
+
+    setValues: {}
+
 };
 
 
