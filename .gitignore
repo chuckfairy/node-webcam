@@ -2,3 +2,4 @@ node_modules/
 *.sw[po]
 test/output
 tmp/
+.idea

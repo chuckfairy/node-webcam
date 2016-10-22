@@ -1,6 +1,11 @@
 /**
  * Webcam base class
  *
+ * @class Webcam
+ * @constructor
+ * @param {Object} options composition options
+ * used to set
+ *
  */
 "use strict";
 
@@ -17,7 +22,10 @@ var EventDispatcher = require( __dirname + "/utils/EventDispatcher.js" );
 var CameraUtils = require( __dirname + "/utils/CameraUtils.js" );
 
 
-//Main Class
+/*
+ * Main class
+ *
+ */
 
 function Webcam( options ) {
 
@@ -34,18 +42,32 @@ Webcam.prototype = {
     constructor: Webcam,
 
 
-    //Main opts
+    /**
+     * Main opts from construction
+     *
+     * @property opts
+     * @type {Object}
+     *
+     */
 
     opts: {},
 
 
-    //picture shots
+    /**
+     * picture shots
+     *
+     * @mproperty shots
+     * @type {Array}
+     *
+     */
 
     shots: [],
 
 
     /**
-     * Basic clone
+     * Basic camera instance clone
+     *
+     * @method clone
      *
      * @return Webcam
      *
@@ -59,7 +81,9 @@ Webcam.prototype = {
 
 
     /**
-     * Clear data
+     * Clear shot and camera memory data
+     *
+     * @method clear
      *
      */
 
@@ -75,9 +99,9 @@ Webcam.prototype = {
     /**
      * List available cameras
      *
-     * @param Function callback
+     * @method list
      *
-     * @callback( Array cameras )
+     * @param {Function} callback returns a list of camers
      *
      */
 
@@ -85,13 +109,37 @@ Webcam.prototype = {
 
 
     /**
-     * Capture shot
+     * Has camera
      *
+     * @method hasCamera
      *
-     * @param String location
-     * @param Function callback
+     * @param {Function} callback returns a Boolean
      *
      */
+
+    hasCamera: function( callback ) {
+
+        var scope = this;
+
+        scope.list( function( list ) {
+
+            callback && callback( !! list.length );
+
+        });
+
+    },
+
+
+    /**
+     * Capture shot
+     *
+     * @method capture
+     *
+     * @param {String} location
+     * @param {Function} callback
+     *
+     */
+
     capture: function( location, callback ) {
 
         var scope = this;
@@ -148,7 +196,14 @@ Webcam.prototype = {
     },
 
 
-    //@Override
+    /**
+     * Generate cli command string
+     *
+     * @method generateSh
+     *
+     * @return {String}
+     *
+     */
 
     generateSh: function( location ) { return ""; },
 
@@ -157,12 +212,12 @@ Webcam.prototype = {
      * Get shot buffer from location
      * 0 indexed
      *
-     * @param Number shot
-     * @param Function callback
+     * @method getShot
      *
-     * @return Boolean
+     * @param {Number} shot Index of shots called
+     * @param {Function} callback Returns a call from FS.readFile data
      *
-     * @callback( FS.readFile data )
+     * @return {Boolean}
      *
      */
 
@@ -188,11 +243,13 @@ Webcam.prototype = {
 
 
     /**
-     * Get last shots image data
+     * Get last shot taken image data
      *
-     * @param Function callback
+     * @method getLastShot
      *
-     * @return Boolean
+     * @param {Function} callback Returns last shot from getShot return
+     *
+     * @return {Boolean} Successful getShot
      *
      */
 
@@ -209,10 +266,12 @@ Webcam.prototype = {
      * Get shot base64 as image
      * if passed Number will return a base 64 in the callback
      *
-     * @param Number|FS.readFile shot
-     * @param Function callback
+     * @method getBase64
      *
-     * @return Boolean|String
+     * @param {Number|FS.readFile} shot To be converted
+     * @param {Function} callback Returns base64 string
+     *
+     * @return {Boolean|String}
      *
      */
 
@@ -250,7 +309,14 @@ Webcam.prototype = {
 EventDispatcher.prototype.apply( Webcam.prototype );
 
 
-//Defaults
+/**
+ * Base defaults for option construction
+ *
+ * @property Webcam.Defaults
+ *
+ * @type Object
+ *
+ */
 
 Webcam.Defaults = {
 
@@ -271,7 +337,16 @@ Webcam.Defaults = {
 };
 
 
-//Output types
+/**
+ * Global output types
+ * Various for platform
+ *
+ * @property Webcam.OutputTypes
+ *
+ * @type Object
+ * @static
+ *
+ */
 
 Webcam.OutputTypes = {
 

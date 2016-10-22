@@ -1,8 +1,16 @@
 /**
  * Main classes and use
  *
+ * @module NodeWebcam
+ *
  */
 "use strict";
+
+
+/**
+ * @class API
+ *
+ */
 
 var NodeWebcam = {
 
@@ -30,9 +38,12 @@ var NodeWebcam = {
 /**
  * Main create
  *
- * @param Object options
+ * @method create
+ *
+ * @param {Object} options
  *
  */
+
 NodeWebcam.create = function( options ) {
 
     return NodeWebcam.Factory.create( options );
@@ -43,11 +54,14 @@ NodeWebcam.create = function( options ) {
 /**
  * Quick capture helper
  *
- * @param String location
- * @param Object options
- * @param Function callback
+ * @method capture
+ *
+ * @param {String} location
+ * @param {Object} options
+ * @param {Function} callback
  *
  */
+
 NodeWebcam.capture = function( location, options, callback ) {
 
     var webcam = NodeWebcam.create( options );
@@ -57,7 +71,6 @@ NodeWebcam.capture = function( location, options, callback ) {
     return webcam;
 
 };
-
 
 
 //Export
