@@ -2,6 +2,7 @@
 
 Cross platform webcam usage
 
+
 # Install
 
 ### Linux
@@ -147,7 +148,7 @@ var Webcam = NodeWebcam.create({});
 Quick helper for taking pictures via one function. Will return Webcam instance via NodeWebcam.create.
 
 ```javascript
-NodeWebcam.capture( "my_picture", {}, function( err ) {
+NodeWebcam.capture( "my_picture", {}, function( err, data ) {
 
     if ( !err ) console.log( "Image created!" );
 
@@ -192,7 +193,7 @@ Reset data and memory of past shots
 
 ### Webcam.capture( String location, Object options, Function callback )
 
-Will return the location of the image. This function will auto append the output type if not specified in file name.
+First param of callback will be a possible error or null. Second will return the location of the image or null. The following functions will follow similarly. This function will auto append the output type if not specified in file name.
 
 
 ### Webcam.getShot( Number shot, Function callback )
