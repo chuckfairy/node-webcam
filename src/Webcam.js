@@ -56,7 +56,7 @@ Webcam.prototype = {
     /**
      * picture shots
      *
-     * @mproperty shots
+     * @property shots
      * @type {Array}
      *
      */
@@ -315,6 +315,7 @@ EventDispatcher.prototype.apply( Webcam.prototype );
  * @property Webcam.Defaults
  *
  * @type Object
+ * @static
  *
  */
 
