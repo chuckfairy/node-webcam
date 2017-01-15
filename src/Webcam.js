@@ -137,6 +137,7 @@ Webcam.prototype = {
      *
      * @param {String} location
      * @param {Function} callback
+     * @return void
      *
      */
 
@@ -170,15 +171,24 @@ Webcam.prototype = {
 
             if( err ) {
 
-                console.log( derr );
-
-                throw err;
+                return ( callback && callback( err ) );
 
             }
 
-            if( scope.opts.verbose && out ) {
+            if( scope.opts.verbose && derr ) {
 
-                console.log( out );
+                console.log( derr );
+
+            }
+
+
+            //Run validation overrides
+
+            var validationErrors;
+
+            if( validationErrors = scope.runCaptureValidations( derr ) ) {
+
+                return ( callback && callback( validationErrors ) );
 
             }
 
@@ -189,7 +199,7 @@ Webcam.prototype = {
 
             scope.dispatch({ type: "capture" });
 
-            callback && callback( location );
+            callback && callback( err, location );
 
         });
 
@@ -227,17 +237,21 @@ Webcam.prototype = {
 
         var shotLocation = scope.shots[ shot ];
 
-        if( ! shotLocation ) { return false; }
+        if( !shotLocation ) {
+
+            callback && callback(
+                new Error( "Shot number " + shot + " not found" )
+            );
+
+            return;
+
+        }
 
         FS.readFile( shotLocation, function( err, data ) {
 
-            if( err ) { throw err; }
-
-            callback && callback( data );
+            callback && callback( err, data );
 
         });
-
-        return true;
 
     },
 
@@ -257,7 +271,13 @@ Webcam.prototype = {
 
         var scope = this;
 
-        return scope.getShot( scope.shots.length - 1, callback );
+        if( ! scope.shots.length ) {
+
+            callback && callback( new Error( "Camera has no last shot" ) );
+
+        }
+
+        scope.getShot( scope.shots.length - 1, callback );
 
     },
 
@@ -269,7 +289,7 @@ Webcam.prototype = {
      * @method getBase64
      *
      * @param {Number|FS.readFile} shot To be converted
-     * @param {Function} callback Returns base64 string
+     * @param {Function( Error|null, Mixed )} callback Returns base64 string
      *
      * @return {Boolean|String}
      *
@@ -284,13 +304,19 @@ Webcam.prototype = {
 
         if( typeof( shot ) === "number" ) {
 
-            scope.getShot( shot, function( data ) {
+            return scope.getShot( shot, function( err, data ) {
 
-                callback( scope.getBase64( data ) );
+                if( err ) {
+
+                    callback( err );
+
+                    return;
+
+                }
+
+                callback( err, scope.getBase64( data ) );
 
             });
-
-            return true;
 
         }
 
@@ -301,6 +327,24 @@ Webcam.prototype = {
             + scope.opts.output
             + ";base64,"
             + new Buffer( shot ).toString( "base64" );
+
+    },
+
+
+    /**
+     * Data validations for a command line output
+     *
+     * @override
+     *
+     * @param {String} Command exec output
+     *
+     * @return {Error|null}
+     *
+     */
+
+    runCaptureValidations: function( data ) {
+
+        return null;
 
     }
 

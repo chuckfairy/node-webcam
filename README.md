@@ -147,9 +147,9 @@ var Webcam = NodeWebcam.create({});
 Quick helper for taking pictures via one function. Will return Webcam instance via NodeWebcam.create.
 
 ```javascript
-NodeWebcam.capture( "my_picture", {}, function() {
+NodeWebcam.capture( "my_picture", {}, function( err ) {
 
-    console.log( "Image created!" );
+    if ( !err ) console.log( "Image created!" );
 
 });
 ```

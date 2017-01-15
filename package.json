@@ -1,10 +1,10 @@
 {
     "name": "node-webcam",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "description": "Cross platform webcam capture",
     "main": "index.js",
     "scripts": {
-        "test": "mocha test"
+        "test": "node_modules/.bin/mocha test"
     },
     "repository": {
         "type": "git",
@@ -24,12 +24,16 @@
     "bugs": {
         "url": "https://github.com/chuckfairy/node-webcam/issues"
     },
-    "bin": { "node-webcam": "bin/node-webcam.js" },
+    "bin": {
+        "node-webcam": "bin/node-webcam.js"
+    },
     "homepage": "https://github.com/chuckfairy/node-webcam#readme",
     "dependencies": {
         "nopt": "*"
     },
     "devDependencies": {
-        "async": "*"
+        "async": "*",
+        "mocha": "^3.1.0",
+        "chai": "*"
     }
 }

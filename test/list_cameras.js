@@ -8,6 +8,10 @@ var NodeWebcam = require( __dirname + "/../index.js" );
 
 var Path = require( "path" );
 
+var Chai = require( "chai" );
+
+var assert = Chai.assert;
+
 var Async = require( "async" );
 
 var List = [];
@@ -71,7 +75,9 @@ function deviceCheck( done ) {
 
         var urlDevice = url + "_" + index;
 
-        Webcam.capture( urlDevice, function() {
+        Webcam.capture( urlDevice, function( err, data ) {
+
+            assert.typeOf( err, "null" );
 
             callback();
 

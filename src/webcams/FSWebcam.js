@@ -101,9 +101,9 @@ FSWebcam.prototype.generateSh = function( location ) {
 /**
  * Get control values string
  *
- * @param Object setValues
+ * @param {Object} setValues
  *
- * @returns String
+ * @returns {String}
  *
  */
 FSWebcam.prototype.getControlSetString = function( setValues ) {
@@ -133,6 +133,26 @@ FSWebcam.prototype.getControlSetString = function( setValues ) {
 };
 
 
+/**
+ * Data validations based on fs output
+ *
+ * @inheritdoc
+ *
+ */
+
+FSWebcam.prototype.runCaptureValidations = function( data ) {
+
+    if( FSWebcam.Validations.noWebcam.exec( data ) ) {
+
+        return new Error( "No webcam found" );
+
+    }
+
+    return null;
+
+};
+
+
 //Defaults
 
 FSWebcam.Defaults = {
@@ -152,6 +172,15 @@ FSWebcam.Defaults = {
     saturation: false,
 
     setValues: {}
+
+};
+
+
+//Validations const
+
+FSWebcam.Validations = {
+
+    noWebcam: /no.*such.*file/i
 
 };
 

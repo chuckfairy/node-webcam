@@ -10,6 +10,10 @@ var Path = require( "path" );
 
 var FS = require( "fs" );
 
+var Chai = require( "chai" );
+
+var assert = Chai.assert;
+
 
 //Main capture sequence
 
@@ -24,11 +28,34 @@ describe("Capture", function() {
 
         var url = Path.resolve( __dirname, "output", "test_image" );
 
-        var Webcam = NodeWebcam.capture( url, {}, function( url ) {
+        var Webcam = NodeWebcam.capture( url, {}, function( err, url ) {
+
+            assert.typeOf( err, 'null' );
 
             console.log( "Image saved to " + url );
 
             FS.unlinkSync( url );
+
+            done();
+
+        });
+
+    });
+
+
+    //Default webcam capture using global API
+
+    it( "Should fail to capture from fake webcam", function( done ) {
+
+        this.timeout( 6000 );
+
+        var url = Path.resolve( __dirname, "output", "test_image" );
+
+        var opts = { device: "OBVIOUSLY-FAKE-WEBCAM" };
+
+        var Webcam = NodeWebcam.capture( url, opts, function( err, url ) {
+
+            assert.equal( err instanceof Error, true );
 
             done();
 

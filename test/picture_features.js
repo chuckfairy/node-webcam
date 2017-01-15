@@ -8,6 +8,10 @@
 
 var NodeWebcam = require( __dirname + "/../index.js" );
 
+var Chai = require( "chai" );
+
+var assert = Chai.assert;
+
 var Async = require( "async" );
 
 var Features = [
@@ -62,7 +66,9 @@ function featureTest() {
 
             var url = __dirname + "/output/feature_" + feature.name;
 
-            Webcam.capture( url, function() {
+            Webcam.capture( url, function( err, data ) {
+
+                assert.typeOf( err, "null" );
 
                 callback();
 
