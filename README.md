@@ -206,7 +206,7 @@ Get base 64 of shot number or data already grabbed from FS.
 
 ### FSWebcam
 
-Uses the fswebcam program. Available in linux (apt-get install fswebca). Extra program addons provided in options.
+Uses the fswebcam program. Available in linux (apt-get install fswebcam). Extra program addons provided in options.
 
 ```javascript
 var NodeWebcam = require( "node-webcam" );
