@@ -32,8 +32,6 @@ describe("Capture", function() {
 
             assert.typeOf( err, 'null' );
 
-            console.log( "Image saved to " + url );
-
             FS.unlinkSync( url );
 
             done();

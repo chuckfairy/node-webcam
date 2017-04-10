@@ -39,8 +39,6 @@ function base64Capture( done ) {
 
     Webcam.capture( url, function( err, url ) {
 
-        console.log( "Image saved to " + url );
-
         Webcam.getBase64( Webcam.shots.length - 1, function( err, base64 ) {
 
             var writeLocal = __dirname + "/output/test_image_64.html";

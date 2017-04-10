@@ -131,7 +131,7 @@ function main() {
 
         }
 
-        console.log( "Webcam took picture" );
+        console.log( "node-webcam success " + parsedOpts.location );
 
 
     });

@@ -14,9 +14,9 @@
 
 var NodeWebcam = {
 
-    version: "0.3.3",
+    version: "0.4.0",
 
-    REVISION: 3,
+    REVISION: 4,
 
     Factory: require( __dirname + "/src/Factory.js" ),
 

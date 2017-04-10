@@ -5,6 +5,7 @@ Cross platform webcam usage
 
 # Install
 
+
 ### Linux
 
 ```
@@ -33,64 +34,6 @@ Standalone exe included. See src/bindings/CommandCam
 
 # Usage
 
-``` javascript
-//Config opts
-
-var opts = {
-
-    width: [ Number, 1280 ],
-
-    height: [ Number, 720 ],
-
-    delay: [ Number, 0 ],
-
-    quality: [ Number, 100 ],
-
-    output: [ String, "jpeg" ],
-
-    verbose: [ Boolean, true ],
-
-    help: [ Boolean, false ],
-
-    version: [ Boolean, false ],
-
-    location: Path
-
-};
-
-
-//Shorthand options
-
-var shorthand = {
-
-    w: [ "--width" ],
-
-    h: [ "--height" ],
-
-    d: [ "--delay" ],
-
-    q: [ "--quality" ],
-
-    out: [ "--output" ],
-
-    h: [ "--help", true ],
-
-    v: [ "--version", true ],
-
-    l: [ "--location" ]
-
-};
-```
-
-### Shell Usage
-
-```
-#node-webcam will auto output the file type at the end
-
-node-webcam --w 500 --h 500 --d 2 --l picture
-
-```
-
 ### API Usage
 
 ``` javascript
@@ -111,19 +54,103 @@ var opts = {
 
     quality: 100,
 
+    // [jpeg, png] support varies
+    // Webcam.OutputTypes
+
     output: "jpeg",
 
-    verbose: true
+    device: false,
 
-}
+
+    // [location, buffer, base64]
+    // Webcam.CallbackReturnTypes
+
+    callbackReturn: "location",
+
+    verbose: false
+
+};
+
+
+//Creates webcam instance
 
 var Webcam = NodeWebcam.create( opts );
 
 
 //Will automatically append location output type
 
-Webcam.capture( "test_picture" );
+Webcam.capture( "test_picture", function( err, data ) {} );
+
+
+//Also available for quite use
+
+NodeWebcam.capture( "test_picture", opts, function( err, data ) {
+
+});
+
+
+//Return type with base 64 image
+
+var opts = {
+    callbackReturn: "base64"
+};
+
+NodeWebcam.capture( "test_picture", opts, function( err, data ) {
+
+    var image = "<img src='" + data + "'>";
+
+});
 ```
+
+### Shell Usage
+
+```
+#Config opts
+
+--width Picture width
+
+--height Picture height
+
+--delay Delay till shot
+
+--quality Quality of image 0-100
+
+--output Output type [png, jpg, bmp]
+
+--verbose Verbose debugging
+
+--help Usage help text
+
+--version node-webcam version
+
+--location Location to output webcam capture
+
+
+#Shorthand options
+
+w: [ "--width" ],
+
+h: [ "--height" ],
+
+d: [ "--delay" ],
+
+q: [ "--quality" ],
+
+out: [ "--output" ],
+
+h: [ "--help", true ],
+
+v: [ "--version", true ],
+
+l: [ "--location" ]
+
+
+#node-webcam will auto output the file type at the end
+
+node-webcam --w 500 --h 500 --d 2 --l picture # ./bin/node-webcam.js
+
+```
+
 
 # Classes
 
@@ -174,11 +201,20 @@ var opts = {
 
     quality: 100,
 
+    // [jpeg, png] support varies
+    // Webcam.OutputTypes
+
     output: "jpeg",
 
     device: false,
 
-    verbose: true
+
+    // [buffer, base64]
+    // Webcam.CallbackReturnTypes
+
+    callbackReturn: "location",
+
+    verbose: false
 
 }
 
@@ -191,16 +227,16 @@ var cam = new Webcam( opts );
 
 Reset data and memory of past shots
 
-### Webcam.capture( String location, Object options, Function callback )
+### Webcam.capture( String location, Object options, Function callback( Error|Null, Buffer) )
 
 First param of callback will be a possible error or null. Second will return the location of the image or null. The following functions will follow similarly. This function will auto append the output type if not specified in file name.
 
 
-### Webcam.getShot( Number shot, Function callback )
+### Webcam.getShot( Number shot, Function callback( Error|Null, Buffer) )
 
 ### Webcam.getLastShot( Function callback )
 
-### Webcam.getBase64( Number|Buffer shot, Function callback )
+### Webcam.getBase64( Number|Buffer shot, Function callback( Error|Null, Buffer) )
 
 Get base 64 of shot number or data already grabbed from FS.
 
