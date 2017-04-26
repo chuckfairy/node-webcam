@@ -14,7 +14,7 @@
 
 var NodeWebcam = {
 
-    version: "0.4.0",
+    version: "0.4.1",
 
     REVISION: 4,
 

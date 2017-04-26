@@ -1,4 +1,5 @@
 /**
+ *
  * Webcam base class
  *
  * @class Webcam
@@ -20,6 +21,8 @@ var Utils = require( __dirname + "/utils/Utils.js" );
 var EventDispatcher = require( __dirname + "/utils/EventDispatcher.js" );
 
 var CameraUtils = require( __dirname + "/utils/CameraUtils.js" );
+
+var Shot = require( "./Shot.js" );
 
 
 /*
@@ -54,10 +57,10 @@ Webcam.prototype = {
 
 
     /**
-     * picture shots
+     * Array of Shot objects
      *
      * @property shots
-     * @type {Array}
+     * @type {Shots[]}
      *
      */
 
@@ -145,13 +148,29 @@ Webcam.prototype = {
 
         var scope = this;
 
+        if(
+            location === null
+            && scope.opts.callbackReturn ===
+                Webcam.CallbackReturnTypes.buffer
+        ) {
+
+            console.warn(
+                "If capturing image in memory\
+                your callback return type cannot be the location"
+            );
+
+            scope.opts.callbackReturn = "buffer";
+
+        }
+
         var fileType = Webcam.OutputTypes[ scope.opts.output ];
 
-        var location = location || "";
-
-        location = location.match( /\..*$/ )
-            ? location
-            : location + "." + fileType;
+        var location = location === null
+            ? null
+            : ( location.match( /\..*$/ )
+                ? location
+                : location + "." + fileType
+            );
 
 
         //Shell statement grab
@@ -167,7 +186,12 @@ Webcam.prototype = {
 
         //Shell execute
 
-        EXEC( sh, function( err, out, derr ) {
+        var shArgs = {
+            shell: "/bin/sh",
+            maxBuffer: 1024 * 10000
+        };
+
+        EXEC( sh, shArgs, function( err, out, derr ) {
 
             if( err ) {
 
@@ -195,12 +219,18 @@ Webcam.prototype = {
 
             //Callbacks
 
-            scope.shots.push( location );
+            var shot = scope.createShot( location, derr );
 
-            scope.dispatch({ type: "capture" });
+            if( scope.opts.saveShots ) {
+
+                scope.shots.push( shot );
+
+            }
+
+            scope.dispatch({ type: "capture", shot: shot });
 
             callback && (
-                scope.handleCallbackReturnType( callback, location )
+                scope.handleCallbackReturnType( callback, shot )
             );
 
         });
@@ -221,39 +251,51 @@ Webcam.prototype = {
 
 
     /**
-     * Get shot buffer from location
-     * 0 indexed
+     * Create a shot overider
+     *
+     * @method createShot
+     *
+     * @return {String}
+     *
+     */
+
+    createShot: function( location, data ) {
+
+        return new Shot( location, data );
+
+    },
+
+    /**
+     * Get shot instances from cache index
      *
      * @method getShot
      *
      * @param {Number} shot Index of shots called
      * @param {Function} callback Returns a call from FS.readFile data
      *
+     * @throws Error if shot at index not found
+     *
      * @return {Boolean}
      *
      */
 
-    getShot: function( shot, callback ) {
+    getShot: function( index, callback ) {
 
         var scope = this;
 
-        var shotLocation = scope.shots[ shot ];
+        var shot = scope.shots[ index|0 ];
 
-        if( !shotLocation ) {
+        if( ! shot ) {
 
-            callback && callback(
-                new Error( "Shot number " + shot + " not found" )
+            throw new Error(
+                "Shot number " + index + " not found"
             );
 
             return;
 
         }
 
-        FS.readFile( shotLocation, function( err, data ) {
-
-            callback && callback( err, data );
-
-        });
+        return shot;
 
     },
 
@@ -263,23 +305,92 @@ Webcam.prototype = {
      *
      * @method getLastShot
      *
-     * @param {Function} callback Returns last shot from getShot return
+     * @throws Error Camera has no last shot
      *
-     * @return {Boolean} Successful getShot
+     * @return {Shot}
      *
      */
 
-    getLastShot: function( callback ) {
+    getLastShot: function() {
 
         var scope = this;
 
         if( ! scope.shots.length ) {
 
-            callback && callback( new Error( "Camera has no last shot" ) );
+            throw new Error( "Camera has no last shot" );
+            return;
 
         }
 
-        scope.getShot( scope.shots.length - 1, callback );
+        return scope.getShot( scope.shots.length - 1 );
+
+    },
+
+
+    /**
+     * Get shot buffer from location
+     * 0 indexed
+     *
+     * @method getShotBuffer
+     *
+     * @param {Number} shot Index of shots called
+     * @param {Function} callback Returns a call from FS.readFile data
+     *
+     * @return {Boolean}
+     *
+     */
+
+    getShotBuffer: function( shot, callback ) {
+
+        var scope = this;
+
+        if( typeof( shot ) === "number" ) {
+
+            shot = scope.getShot( shot );
+
+        }
+
+        if( shot.location ) {
+
+            FS.readFile( shot.location, function( err, data ) {
+
+                callback( err, data );
+
+            });
+
+        } else if( ! shot.data ) {
+
+            callback(
+                new Error( "Shot not valid" )
+            );
+
+        } else {
+
+            callback( null, shot.data );
+
+        }
+
+    },
+
+
+    /**
+     * Get last shot buffer taken image data
+     *
+     * @method getLastShotBuffer
+     *
+     * @throws Error Shot not found
+     *
+     * @return {Shot}
+     *
+     */
+
+    getLastShotBuffer: function( callback ) {
+
+        var scope = this;
+
+        var shot = scope.getLastShot();
+
+        scope.getShotBuffer( shot, callback );
 
     },
 
@@ -301,38 +412,46 @@ Webcam.prototype = {
 
         var scope = this;
 
+        scope.getShotBuffer( shot, function( err, data ) {
 
-        //Typeof number for a getShot callback
+            if( err ) {
 
-        if( typeof( shot ) === "number" ) {
+                callback( err );
 
-            return scope.getShot( shot, function( err, data ) {
+                return;
 
-                if( err ) {
+            }
 
-                    callback( err );
+            var base64 = scope.getBase64FromBuffer( data );
 
-                    return;
+            callback( null, base64 );
 
-                }
+        });
 
-                scope.getBase64( data, callback );
-
-            });
-
-        }
+    },
 
 
-        //Data use
+    /**
+     * Get base64 string from bufer
+     *
+     * @method getBase64
+     *
+     * @param {Number|FS.readFile} shot To be converted
+     * @param {Function( Error|null, Mixed )} callback Returns base64 string
+     *
+     * @return {String} Dont use
+     *
+     */
+
+    getBase64FromBuffer: function( shotBuffer ) {
+
+        var scope = this;
 
         var image = "data:image/"
             + scope.opts.output
             + ";base64,"
-            + new Buffer( shot ).toString( "base64" );
+            + new Buffer( shotBuffer ).toString( "base64" );
 
-        callback( null, image );
-
-        //@deprecated
         return image;
 
     },
@@ -374,7 +493,7 @@ Webcam.prototype = {
      *
      */
 
-    handleCallbackReturnType: function( callback, location ) {
+    handleCallbackReturnType: function( callback, shot ) {
 
         var scope = this;
 
@@ -382,17 +501,17 @@ Webcam.prototype = {
 
             case Webcam.CallbackReturnTypes.location:
 
-                return callback( null, location );
+                return callback( null, shot.location );
 
 
             case Webcam.CallbackReturnTypes.buffer:
 
-                return scope.getLastShot( callback );
+                return scope.getShotBuffer( shot, callback );
 
 
             case Webcam.CallbackReturnTypes.base64:
 
-                return scope.getLastShot64( callback );
+                return scope.getBase64( shot, callback );
 
             default:
 
@@ -441,18 +560,34 @@ EventDispatcher.prototype.apply( Webcam.prototype );
 
 Webcam.Defaults = {
 
+    //Picture related
+
     width: 1280,
 
     height: 720,
 
+    quality: 100,
+
+
+    //Delay to take shot
+
     delay: 0,
 
-    quality: 100,
+
+    //Save shots in memory
+
+    saveShots: true,
+
 
     // [jpeg, png] support varies
     // Webcam.OutputTypes
 
     output: "jpeg",
+
+
+    //Which camera to use
+    //Use Webcam.list() for results
+    //false for default device
 
     device: false,
 
@@ -461,6 +596,9 @@ Webcam.Defaults = {
     // Webcam.CallbackReturnTypes
 
     callbackReturn: "location",
+
+
+    //Logging
 
     verbose: false
 
@@ -504,7 +642,7 @@ Webcam.CallbackReturnTypes = {
 
     "default": "location",
 
-    "location": "location", // Buffer object
+    "location": "location", // Shot location
     "buffer": "buffer", // Buffer object
     "base64": "base64" // String ex : "data..."
 

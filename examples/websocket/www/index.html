@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+        <title>Websocket node-webcam example</title>
+
+<style>
+
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+#img {
+    width: 100%;
+    display: block;
+}
+
+</style>
+
+    </head>
+
+    <body>
+
+        <div id="container">
+
+            <img id="img"></img>
+
+        </div>
+
+        <script>
+
+(function() {
+
+    "use strict";
+
+    var container = document.getElementById( "container" );
+
+    var img = document.getElementById( "img" );
+
+    var ws = new WebSocket( "ws://localhost:9091" );
+
+    ws.onmessage = function( data ) {
+
+        img.src = data.data;
+
+    };
+
+})();
+
+        </script>
+
+    </body>
+
+</html>
+

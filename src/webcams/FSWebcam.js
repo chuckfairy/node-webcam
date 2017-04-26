@@ -12,6 +12,8 @@ var Webcam = require( __dirname + "/../Webcam.js" );
 
 var Utils = require( __dirname + "/../utils/Utils.js" );
 
+var Shot = require( "./../Shot.js" );
+
 
 //Main class
 
@@ -30,6 +32,27 @@ FSWebcam.prototype = Object.create( Webcam.prototype );
 FSWebcam.prototype.constructor = FSWebcam;
 
 FSWebcam.prototype.bin = "fswebcam";
+
+
+/**
+ * @override
+ *
+ * Create shot possibly from memory stdout
+ *
+ */
+
+FSWebcam.prototype.createShot = function( location, data ) {
+
+    if( location === null ) {
+
+        console.log( "TEST", data );
+        var data = new Buffer( data );
+
+    }
+
+    return new Shot( location, data );
+
+};
 
 
 /**
@@ -81,7 +104,14 @@ FSWebcam.prototype.generateSh = function( location ) {
 
     var setValues = scope.getControlSetString( scope.opts.setValues );
 
-    var sh = scope.bin + " "
+
+    // Use memory if null location
+
+    var shellLocation = (location === null)
+        ? "- -"
+        : location;
+
+    var sh = scope.bin + " -q "
         + resolution + " "
         + output + " "
         + quality + " "
@@ -91,7 +121,7 @@ FSWebcam.prototype.generateSh = function( location ) {
         + rotation + " "
         + banner + " "
         + setValues + " "
-        + location;
+        + shellLocation;
 
     return sh;
 
@@ -180,7 +210,7 @@ FSWebcam.Defaults = {
 
 FSWebcam.Validations = {
 
-    noWebcam: /no.*such.*file/i
+    noWebcam: /no.*such.*(file|device)/i
 
 };
 

@@ -35,11 +35,15 @@ function base64Capture( done ) {
 
     var url = Path.resolve( __dirname, "output", "test_image" );
 
-    var Webcam = NodeWebcam.Factory.create();
+    var Webcam = NodeWebcam.Factory.create({
+        saveShots: true
+    });
 
     Webcam.capture( url, function( err, url ) {
 
         Webcam.getBase64( Webcam.shots.length - 1, function( err, base64 ) {
+
+            assert.equal( err, null );
 
             var writeLocal = __dirname + "/output/test_image_64.html";
 

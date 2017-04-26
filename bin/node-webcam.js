@@ -133,7 +133,6 @@ function main() {
 
         console.log( "node-webcam success " + parsedOpts.location );
 
-
     });
 
 }
