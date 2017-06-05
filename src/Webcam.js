@@ -187,7 +187,6 @@ Webcam.prototype = {
         //Shell execute
 
         var shArgs = {
-            shell: "/bin/sh",
             maxBuffer: 1024 * 10000
         };
 
