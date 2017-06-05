@@ -41,7 +41,9 @@ var opts = {
 
     bottomBanner: [ Boolean, false ],
 
-    location: Path
+    skip: [ Number, 0 ],
+
+    location: Path,
 
 };
 
@@ -70,7 +72,9 @@ var shorthand = {
 
     r: [ "--rotation" ],
 
-    l: [ "--location" ]
+    l: [ "--location" ],
+
+    S: [ "--skip" ]
 
 };
 

@@ -96,6 +96,10 @@ FSWebcam.prototype.generateSh = function( location ) {
             ? "--top-banner"
             : "--bottom-banner" );
 
+    var skip = scope.opts.skip
+        ? "--skip " + scope.opts.skip
+        : "";
+
     if( scope.opts.saturation ) {
 
         scope.opts.setValues.Saturation = scope.opts.saturation;
@@ -121,6 +125,7 @@ FSWebcam.prototype.generateSh = function( location ) {
         + rotation + " "
         + banner + " "
         + setValues + " "
+        + skip + " "
         + shellLocation;
 
     return sh;
@@ -200,6 +205,8 @@ FSWebcam.Defaults = {
     greyscale: false,
 
     saturation: false,
+
+    skip: false,
 
     setValues: {}
 

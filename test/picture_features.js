@@ -36,6 +36,12 @@ var Features = [
     {
         name: "Clean",
         options: {}
+    },
+    {
+        name: "Skip",
+        options: {
+            skip: 20
+        }
     }
 ];
 
