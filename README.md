@@ -29,7 +29,7 @@ brew install imagesnap
 
 ### Windows
 
-Standalone exe included. See src/bindings/CommandCam
+Standalone exe included. See [src/bindings/CommandCam](src/bindings/CommandCam)
 
 
 # Usage
