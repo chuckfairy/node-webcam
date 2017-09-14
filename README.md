@@ -1,4 +1,4 @@
-# node-webcam
+# [node-webcam](https://github.com/chuckfairy/node-webcam)
 
 Cross platform webcam usage
 
@@ -29,7 +29,7 @@ brew install imagesnap
 
 ### Windows
 
-Standalone exe included. See [src/bindings/CommandCam](src/bindings/CommandCam)
+Standalone exe included. See [src/bindings/CommandCam](https://github.com/chuckfairy/node-webcam/tree/master/src/bindings/CommandCam)
 
 
 # Usage
@@ -183,7 +183,7 @@ node-webcam --w 500 --h 500 --d 2 --l picture # ./bin/node-webcam.js
 
 # Classes
 
-## NodeWebcam
+## [NodeWebcam](https://github.com/chuckfairy/node-webcam/blob/master/index.js)
 
 Main require used. Also has helper functions just for you.
 
@@ -211,7 +211,7 @@ NodeWebcam.capture( "my_picture", {}, function( err, data ) {
 });
 ```
 
-## Webcams
+## [Webcam](https://github.com/chuckfairy/node-webcam/blob/master/src/Webcam.js)
 
 Base webcam class in which all other cameras inherit from
 
@@ -269,7 +269,7 @@ First param of callback will be a possible error or null. Second will return the
 
 Get base 64 of shot number or data already grabbed from FS.
 
-### FSWebcam
+## [FSWebcam](https://github.com/chuckfairy/node-webcam/blob/master/src/webcams/FSWebcam.js)
 
 Uses the fswebcam program. Available in linux (apt-get install fswebcam). Extra program addons provided in options.
 
