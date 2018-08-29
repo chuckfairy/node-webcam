@@ -25,6 +25,12 @@ function FSWebcam( options ) {
 
     Webcam.call( scope, scope.opts );
 
+    if( scope.opts.output === "png" && scope.opts.quality > 9 ) {
+
+        scope.opts.quality = 9;
+
+    }
+
 }
 
 FSWebcam.prototype = Object.create( Webcam.prototype );
