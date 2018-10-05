@@ -116,6 +116,9 @@ ImageSnapWebcam.prototype.list = function( callback ) {
 
             }
 
+            //imagesnap update adds extra stuff
+            line = line.replace(/.*?\[(.*?)\].*/, "$1");
+
             cams.push( line );
 
         }
