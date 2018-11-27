@@ -16,11 +16,11 @@ var EXEC = CHILD_PROCESS.exec;
 
 var FS = require( "fs" );
 
-var Utils = require( __dirname + "/utils/Utils.js" );
+var Utils = require( "./utils/Utils.js" );
 
-var EventDispatcher = require( __dirname + "/utils/EventDispatcher.js" );
+var EventDispatcher = require( "./utils/EventDispatcher.js" );
 
-var CameraUtils = require( __dirname + "/utils/CameraUtils.js" );
+var CameraUtils = require( "./utils/CameraUtils.js" );
 
 var Shot = require( "./Shot.js" );
 

@@ -12,9 +12,9 @@ var CHILD_PROCESS = require('child_process');
 
 var EXEC = CHILD_PROCESS.exec;
 
-var Webcam = require( __dirname + "/../Webcam.js" );
+var Webcam = require( "./../Webcam.js" );
 
-var Utils = require( __dirname + "/../utils/Utils.js" );
+var Utils = require( "./../utils/Utils.js" );
 
 var Path = require( "path" );
 

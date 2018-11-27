@@ -8,9 +8,9 @@
  */
 "use strict";
 
-var Webcam = require( __dirname + "/../Webcam.js" );
+var Webcam = require( "./../Webcam.js" );
 
-var Utils = require( __dirname + "/../utils/Utils.js" );
+var Utils = require( "./../utils/Utils.js" );
 
 var Shot = require( "./../Shot.js" );
 

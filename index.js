@@ -18,15 +18,15 @@ var NodeWebcam = {
 
     REVISION: 4,
 
-    Factory: require( __dirname + "/src/Factory.js" ),
+    Factory: require( "./src/Factory.js" ),
 
-    Webcam: require( __dirname + "/src/Factory.js" ),
+    Webcam: require( "./src/Factory.js" ),
 
-    FSWebcam: require( __dirname + "/src/webcams/FSWebcam.js" ),
+    FSWebcam: require( "./src/webcams/FSWebcam.js" ),
 
-    ImageSnapWebcam: require( __dirname + "/src/webcams/ImageSnapWebcam.js" ),
+    ImageSnapWebcam: require( "./src/webcams/ImageSnapWebcam.js" ),
 
-    WindowsWebcam: require( __dirname + "/src/webcams/WindowsWebcam.js" )
+    WindowsWebcam: require( "./src/webcams/WindowsWebcam.js" )
 
 };
 

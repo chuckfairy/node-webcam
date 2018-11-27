@@ -4,7 +4,7 @@
  */
 "use strict";
 
-var NodeWebcam = require( __dirname + "/../index.js" );
+var NodeWebcam = require( "./../index.js" );
 
 var Async = require( "async" );
 

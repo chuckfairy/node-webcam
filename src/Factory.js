@@ -7,11 +7,11 @@ var OS = require( "os" );
 
 //Webcam types
 
-var FSWebcam = require( __dirname + "/webcams/FSWebcam.js" );
+var FSWebcam = require( "./webcams/FSWebcam.js" );
 
-var ImageSnapWebcam = require( __dirname + "/webcams/ImageSnapWebcam.js" );
+var ImageSnapWebcam = require( "./webcams/ImageSnapWebcam.js" );
 
-var WindowsWebcam = require( __dirname + "/webcams/WindowsWebcam.js" );
+var WindowsWebcam = require( "./webcams/WindowsWebcam.js" );
 
 
 //Main singleton
