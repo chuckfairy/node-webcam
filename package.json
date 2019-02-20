@@ -29,12 +29,12 @@
     },
     "homepage": "https://github.com/chuckfairy/node-webcam#readme",
     "dependencies": {
-        "nopt": "*"
+        "nopt": "^4.0.1"
     },
     "devDependencies": {
-        "async": "*",
-        "mocha": "^3.1.0",
-        "chai": "*",
-        "ws": "*"
+        "async": "^2.6.2",
+        "chai": "^4.2.0",
+        "mocha": "^6.0.0",
+        "ws": "^6.1.4"
     }
 }

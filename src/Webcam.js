@@ -238,6 +238,42 @@ Webcam.prototype = {
 
 
     /**
+     * Capture shot
+     *
+     * @method capture
+     *
+     * @param {String} location / most likely the stream location
+     * @param {Function} callback
+     * @param {Function} endCallback
+     * @return void
+     *
+     */
+
+    record: function( location, callback, endCallback ) {
+
+        var scope = this;
+        var sh = scope.generateVideoSh(location);
+
+        CHILD_PROCESS.spawn(sh, function(err
+    },
+
+
+    /**
+     * Stop current recording of webcam
+     *
+     * @method stopRecording
+     *
+     * @param {Function} callback
+     * @return void
+     *
+     */
+
+    stopRecording: function( callback ) {
+
+    },
+
+
+    /**
      * Generate cli command string
      *
      * @method generateSh
@@ -247,6 +283,19 @@ Webcam.prototype = {
      */
 
     generateSh: function( location ) { return ""; },
+
+
+    /**
+     * Generate cli command string for a video record
+     * if a cli camera
+     *
+     * @method generateVideoSh
+     *
+     * @return {String}
+     *
+     */
+
+    generateVideoSh: function( location ) { return ""; },
 
 
     /**
