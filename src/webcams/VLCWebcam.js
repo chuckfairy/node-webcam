@@ -52,14 +52,6 @@ VLCWebcam.prototype.generateVideoSh = function( location ) {
 
     var scope = this;
 
-    var verbose = scope.opts.verbose
-        ? "-v"
-        : "-q";
-
-    var delay = scope.opts.delay
-        ? "-w " + scope.opts.delay
-        : "";
-
     var device = scope.opts.device
         ? "-d '" + scope.opts.device + "'"
         : "";
@@ -93,52 +85,6 @@ VLCWebcam.prototype.generateVideoSh = function( location ) {
         + location;
 
     return sh;
-
-};
-
-
-/**
- * @Override
- *
- * Webcam list
- *
- * @param Function callback
- *
- */
-VLCWebcam.prototype.list = function( callback ) {
-
-    var scope = this;
-
-    var sh = scope.bin + " -l";
-
-    var cams = [];
-
-    EXEC( sh, function( err, data, out ) {
-
-        var lines = data.split( "\n" );
-
-        var ll = lines.length;
-
-        for( var i = 0; i < ll; i ++ ) {
-
-            var line = lines[ i ];
-
-            if( line === "Video Devices:" || ! line ) {
-
-                continue;
-
-            }
-
-            //imagesnap update adds extra stuff
-            line = line.replace(/.*?\[(.*?)\].*/, "$1");
-
-            cams.push( line );
-
-        }
-
-        callback && callback( cams );
-
-    });
 
 };
 

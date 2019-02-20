@@ -68,6 +68,17 @@ Webcam.prototype = {
 
 
     /**
+     * Main opts from construction
+     *
+     * @property opts
+     * @type {Object}
+     *
+     */
+
+    recording: false,
+
+
+    /**
      * Basic camera instance clone
      *
      * @method clone
@@ -254,7 +265,8 @@ Webcam.prototype = {
         var scope = this;
         var sh = scope.generateVideoSh(location);
 
-        CHILD_PROCESS.spawn(sh, function(err
+        scope.recording = CHILD_PROCESS.spawn(sh);
+
     },
 
 
@@ -269,6 +281,17 @@ Webcam.prototype = {
      */
 
     stopRecording: function( callback ) {
+
+        var scope = this;
+
+        if( ! scope.recording ) {
+            callback(false);
+            return;
+        }
+
+        scope.recording.kill();
+
+        callback(true);
 
     },
 
