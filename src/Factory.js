@@ -13,6 +13,8 @@ var ImageSnapWebcam = require( "./webcams/ImageSnapWebcam.js" );
 
 var WindowsWebcam = require( "./webcams/WindowsWebcam.js" );
 
+var VLCWebcam = require( "./webcams/VLCWebcam.js" );
+
 
 //Main singleton
 
@@ -56,7 +58,9 @@ Factory.Types = {
 
     win32: WindowsWebcam,
 
-    win64: WindowsWebcam
+    win64: WindowsWebcam,
+
+    vlc: VLCWebcam
 
 };
 

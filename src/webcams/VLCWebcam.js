@@ -37,7 +37,7 @@ VLCWebcam.prototype = Object.create( Webcam.prototype );
 
 VLCWebcam.prototype.constructor = VLCWebcam;
 
-VLCWebcam.prototype.bin = "vlc";
+VLCWebcam.prototype.bin = "cvlc";
 
 
 /**
@@ -52,37 +52,39 @@ VLCWebcam.prototype.generateVideoSh = function( location ) {
 
     var scope = this;
 
-    var device = scope.opts.device
-        ? "-d '" + scope.opts.device + "'"
-        : "";
-
     var width = scope.opts.width
         ? "width=" + scope.opts.width + ","
+        : "";
 
     var height = scope.opts.height
         ? "height=" + scope.opts.height + ","
+        : "";
 
     var transcode = "#transcode{"
-        + scope.opts.vcodec + ","
+        + "vcodec=" + scope.opts.vcodec + ","
         + "vb=400,"
         + width
         + height
         + "acodec=" + scope.opts.acodec + ","
         + "ab=32,channels=2,"
-        + "samplerate=" + scope.opts.samplerate;
+        + "samplerate=" + scope.opts.samplerate
+        + "}";
 
     var dup = ":duplicate{dst=std{access=http{"
-        + "mime=" scope.opts.httpMime + "},mux=asf,"
-        + "dst=:" + scope.opts.port + "/" + location"}}";
+        + "mime=" + scope.opts.httpMime + "},"
+        + "mux=" + scope.opts.mux + ","
+        + "dst=:" + scope.opts.streamPort + "/" + location + "}}";
+
+    var audio = scope.opts.useAudio
+        ? ""
+        : "--no-sout-audio";
 
     var sh = scope.bin + " v4l2:// "
-    + ':v4l2-vdev="' + scope.opts.device + "' "
-    + "--sout "
-    + transcode
-        + delay + " "
-        + device + " "
-        + verbose + " "
-        + location;
+        + ':v4l2-vdev="' + scope.opts.device + '" '
+        + "--sout "
+        + "'" + transcode + dup + "' "
+        + audio
+    ;
 
     return sh;
 
@@ -95,13 +97,14 @@ VLCWebcam.Defaults = {
 
     delay: 1,
 
-    vcodec: "vcodec=x264{keyint=60, idrint=2}, vcodec=h264",
+    vcodec: "x264{keyint=60,idrint=2},vcodec=h264",
+    //vcodec: "mp4",
 
-    acodec: "mp4a",
+    acodec: "none",
 
     samplerate: 22100,
 
-    port: 8082,
+    streamPort: 8082,
 
     width: "",
 
@@ -110,6 +113,11 @@ VLCWebcam.Defaults = {
     useAudio: false,
 
     httpMime: "video/x-ms-wmv",
+    //httpMime: "video/ogg",
+    //httpMime: "video/mp4",
+
+    mux: "asf"
+    //mux: "ogg"
 
 };
 

@@ -255,17 +255,45 @@ Webcam.prototype = {
      *
      * @param {String} location / most likely the stream location
      * @param {Function} callback
-     * @param {Function} endCallback
+     * @param {Function} errorCallback
      * @return void
      *
      */
 
-    record: function( location, callback, endCallback ) {
+    record: function( location, callback, errorCallback ) {
 
         var scope = this;
         var sh = scope.generateVideoSh(location);
 
-        scope.recording = CHILD_PROCESS.spawn(sh);
+        if( scope.opts.verbose ) {
+
+            console.log( sh );
+
+        }
+
+        scope.recording = CHILD_PROCESS.exec(sh, []);
+
+        scope.recording.on("message", function() {
+
+            if( scope.opts.verbose ) {
+
+                console.log( arguments );
+
+            }
+
+        });
+
+        scope.recording.on("error", function(err, data) {
+
+            if( scope.opts.verbose ) {
+
+                console.log("ERROR", err);
+
+            }
+
+            errorCallback && errorCallback(err);
+
+        });
 
     },
 
@@ -671,7 +699,17 @@ Webcam.Defaults = {
 
     //Logging
 
-    verbose: false
+    verbose: false,
+
+
+    //Stream port for some recording types
+
+    streamPort: 8082,
+
+
+    //Audio usage in recording
+
+    useAudio: false,
 
 };
 
