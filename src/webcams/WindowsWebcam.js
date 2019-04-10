@@ -32,6 +32,10 @@ function WindowsWebcam( options ) {
 
     Webcam.call( scope, scope.opts );
 
+    //command cam uses miliseconds
+
+    scope.opts.delay = scope.opts.delay * 1000;
+
 }
 
 WindowsWebcam.prototype = Object.create( Webcam.prototype );

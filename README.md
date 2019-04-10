@@ -55,7 +55,10 @@ var opts = {
     quality: 100,
 
 
-    //Delay to take shot
+    //Delay in seconds to take shot
+    //if the platform supports miliseconds
+    //use a float (0.1)
+    //Currently only on windows
 
     delay: 0,
 
