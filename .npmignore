@@ -1,0 +1,6 @@
+*.sw[po]
+test/output
+tmp/
+.idea
+doc/
+examples/

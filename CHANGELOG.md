@@ -14,3 +14,4 @@
 
 ### 0.5.0
 * windows now accounts for seconds like rest, use a float (0.4) for milisecond delays
+* no docs in repo

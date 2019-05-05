@@ -183,6 +183,13 @@ node-webcam --w 500 --h 500 --d 2 --l picture # ./bin/node-webcam.js
 
 ```
 
+# Generated Documentation
+
+```
+# install yuidoc and run
+./bin/generate_doc.sh
+```
+
 
 # Classes
 
