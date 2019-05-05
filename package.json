@@ -1,6 +1,6 @@
 {
     "name": "node-webcam",
-    "version": "0.4.7",
+    "version": "0.5.0",
     "description": "Cross platform webcam capture",
     "main": "index.js",
     "scripts": {
@@ -34,7 +34,7 @@
     "devDependencies": {
         "async": "*",
         "chai": "*",
-        "mocha": "^6.1.2",
+        "mocha": "^6.1.4",
         "ws": "*"
     }
 }
