@@ -42,10 +42,10 @@ WindowsWebcam.prototype = Object.create( Webcam.prototype );
 
 WindowsWebcam.prototype.constructor = WindowsWebcam;
 
-WindowsWebcam.prototype.bin = Path.resolve(
+WindowsWebcam.prototype.bin = "\"" + Path.resolve(
     __dirname, "..", "bindings",
     "CommandCam", "Commandcam.exe"
-);
+) + "\"";
 
 
 /**
