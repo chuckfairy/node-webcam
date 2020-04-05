@@ -4,6 +4,8 @@ const fs = require('fs');
 const os = require( "os" );
 const config = require("../package.json");
 
+const tag = "v0.6";
+
 init();
 
 function init() {
@@ -16,7 +18,6 @@ function init() {
 	const file = fs.createWriteStream("src/bindings/CommandCam/CommandCam.exe");
 
 	//Github release url create
-	const tag = "v" + config.version.replace(/\.\d+$/, "");
 	const repo = config.author + "/" + config.name;
 	const url = "https://github.com/" + repo + "/releases/download/" + tag + "/CommandCam.exe";
 
