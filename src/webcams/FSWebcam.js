@@ -114,6 +114,7 @@ FSWebcam.prototype.generateSh = function( location ) {
 
     var setValues = scope.getControlSetString( scope.opts.setValues );
 
+    var verbose = scope.opts.verbose ? "" : " -q"
 
     // Use memory if null location
 
@@ -121,7 +122,8 @@ FSWebcam.prototype.generateSh = function( location ) {
         ? "- -"
         : location;
 
-    var sh = scope.bin + " -q "
+    var sh = scope.bin + 
+        + verbose + " "
         + resolution + " "
         + output + " "
         + quality + " "
