@@ -40,7 +40,7 @@ var Features = [
     {
         name: "Skip",
         options: {
-            skip: 20
+            skip: 1
         }
     }
 ];
