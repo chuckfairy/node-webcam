@@ -162,14 +162,16 @@ FSWebcam.prototype.getControlSetString = function( setValues ) {
         var val = setValues[ setName ];
 
         if( ! val ) { continue; }
-
-        str += setName + "=" + val;
+        
+        // Add a space to separate values if there are multiple control values being set
+        if (str.length > 0) {
+            str += " "
+        }
+        str += `-s ${setName}=${val}`;
 
     }
 
     return str
-        ?"-s " + str
-        : "";
 
 };
 
