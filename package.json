@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "node_modules/.bin/mocha test",
-        "postinstall": "./bin/postinstall.js"
+        "postinstall": "node ./bin/postinstall.js"
     },
     "repository": {
         "type": "git",
