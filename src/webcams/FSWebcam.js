@@ -122,7 +122,7 @@ FSWebcam.prototype.generateSh = function( location ) {
         ? "- -"
         : location;
 
-    var sh = scope.bin + 
+    var sh = scope.bin + " "
         + verbose + " "
         + resolution + " "
         + output + " "
