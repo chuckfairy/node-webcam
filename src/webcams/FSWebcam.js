@@ -76,6 +76,11 @@ FSWebcam.prototype.generateSh = function( location ) {
     var resolution = " -r "
         + scope.opts.width + "x" + scope.opts.height;
 
+    // Adding frame rate
+    var frames = scope.opts.frames
+        ? "-F " + scope.opts.frames
+        : "";
+
     var output = "--" + scope.opts.output;
 
     var quality = scope.opts.quality;
@@ -125,6 +130,7 @@ FSWebcam.prototype.generateSh = function( location ) {
     var sh = scope.bin + " "
         + verbose + " "
         + resolution + " "
+        + frames + " "
         + output + " "
         + quality + " "
         + delay + " "

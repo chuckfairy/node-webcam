@@ -54,6 +54,12 @@ var opts = {
 
     quality: 100,
 
+    // Number of frames to capture
+    // More the frames, longer it takes to capture
+    // Use higher framerate for quality. Ex: 60
+
+    frames: 60,
+
 
     //Delay in seconds to take shot
     //if the platform supports miliseconds
