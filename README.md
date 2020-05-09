@@ -157,6 +157,8 @@ NodeWebcam.capture( "test_picture", opts, function( err, data ) {
 
 --location Location to output webcam capture
 
+--list list available camera devices
+
 
 #Shorthand options
 
