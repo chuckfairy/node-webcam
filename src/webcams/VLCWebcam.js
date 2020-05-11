@@ -62,18 +62,18 @@ VLCWebcam.prototype.generateVideoSh = function( location ) {
 
     var transcode = "#transcode{"
         + "vcodec=" + scope.opts.vcodec + ","
-        + "vb=400,"
-        + width
-        + height
-        + "acodec=" + scope.opts.acodec + ","
-        + "ab=32,channels=2,"
-        + "samplerate=" + scope.opts.samplerate
+        //+ "vb=400,"
+        //+ width
+        //+ height
+        + "acodec=" + scope.opts.acodec //+ ","
+        //+ "ab=32,channels=2,"
+        //+ "samplerate=" + scope.opts.samplerate
         + "}";
 
-    var dup = ":duplicate{dst=std{access=http{"
-        + "mime=" + scope.opts.httpMime + "},"
-        + "mux=" + scope.opts.mux + ","
-        + "dst=:" + scope.opts.streamPort + "/" + location + "}}";
+    var dup = ":std{access=http,"
+        //+ "mime=" + scope.opts.httpMime + ","
+        //+ "mux=" + scope.opts.mux + ","
+        + "dst=:" + scope.opts.streamPort + "/" + location + "}";
 
     var audio = scope.opts.useAudio
         ? ""
@@ -97,10 +97,13 @@ VLCWebcam.Defaults = {
 
     delay: 1,
 
-    vcodec: "x264{keyint=60,idrint=2},vcodec=h264",
+    //vcodec: "x264{keyint=60,idrint=2},vcodec=h264",
+    //vcodec: "flv",
+    vcodec: "FLV1",
     //vcodec: "mp4",
 
-    acodec: "none",
+    //acodec: "none",
+    acodec: "node",
 
     samplerate: 22100,
 
@@ -112,7 +115,8 @@ VLCWebcam.Defaults = {
 
     useAudio: false,
 
-    httpMime: "video/x-ms-wmv",
+    //httpMime: "video/x-ms-wmv",
+    httpMime: "video/flv",
     //httpMime: "video/ogg",
     //httpMime: "video/mp4",
 

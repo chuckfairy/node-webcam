@@ -7,6 +7,7 @@
 
 var httpPort = 9091;
 var streamPort = 8081;
+var streamPortProxy = 8082;
 
 var HTTP = require( "http" );
 
@@ -66,7 +67,7 @@ function setupHTTP() {
 
 function setupWebcam() {
 
-    Webcam.record( "stream.wmv", function( err, data ) {
+    Webcam.record( "stream.flv", function( err, data ) {
 
         if( err ) {
 
@@ -83,3 +84,31 @@ function onExit() {
     Webcam.stopRecording();
 
 }
+
+
+//Proxy
+HTTP.createServer((req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    //var streamPath = "http://localhost:" + streamPort + "/stream.flv";
+
+    var _req = HTTP.request(
+        {
+            hostname: 'localhost',
+            port: streamPort,
+            path: '/stream.flv',
+            headers: req.headers,
+            method: req.method
+        },
+        (_res) => {
+            res.writeHead(_res.statusCode, _res.headers)
+            _res.pipe(res)
+        }
+    )
+    _req.on('error', (e) => {
+        console.error('proxied request failed: '+e.message)
+        res.writeHead(500)
+        res.end()
+    })
+    req.pipe(_req)
+}).listen(streamPortProxy, () => console.log('listening proxy port ' + streamPortProxy))
