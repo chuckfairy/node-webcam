@@ -41,6 +41,8 @@ var opts = {
 
     bottomBanner: [ Boolean, false ],
 
+    driverType: [ String, false ],
+
     skip: [ Number, 0 ],
 
     location: Path,
