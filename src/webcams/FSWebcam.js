@@ -113,10 +113,6 @@ FSWebcam.prototype.generateSh = function( location ) {
     }
 
 
-    var numberOfFrames = scope.opts.numberOfFrames
-        ? "-F " + scope.opts.numberOfFrames
-        : "";
-
     var setValues = scope.getControlSetString( scope.opts.setValues );
 
     var verbose = scope.opts.verbose ? "" : " -q"
@@ -139,7 +135,6 @@ FSWebcam.prototype.generateSh = function( location ) {
         + banner + " "
         + setValues + " "
         + skip + " "
-        + numberOfFrames + " "
         + shellLocation;
 
     return sh;
@@ -225,8 +220,6 @@ FSWebcam.Defaults = {
     skip: false,
 
     setValues: {},
-
-    numberOfFrames: 0,
 
 };
 
