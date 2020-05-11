@@ -42,6 +42,12 @@ var Features = [
         options: {
             skip: 1
         }
+    },
+    {
+        name: "NumberOfFrames",
+        options: {
+            numberOfFrames: 40,
+        }
     }
 ];
 

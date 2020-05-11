@@ -117,6 +117,7 @@ FSWebcam.prototype.generateSh = function( location ) {
 
     }
 
+
     var setValues = scope.getControlSetString( scope.opts.setValues );
 
     var verbose = scope.opts.verbose ? "" : " -q"
@@ -224,7 +225,7 @@ FSWebcam.Defaults = {
 
     skip: false,
 
-    setValues: {}
+    setValues: {},
 
 };
 
