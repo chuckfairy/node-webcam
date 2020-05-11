@@ -79,7 +79,7 @@ NodeWebcam.capture = function( location, options, callback ) {
  *
  * @method list
  *
- * @param {Function(Array<String)} callback
+ * @param {Function(Array<String>)} callback
  *
  */
 
