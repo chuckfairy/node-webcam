@@ -44,7 +44,7 @@ WindowsWebcam.prototype.constructor = WindowsWebcam;
 
 WindowsWebcam.prototype.bin = "\"" + Path.resolve(
     __dirname, "..", "bindings",
-    "CommandCam", "Commandcam.exe"
+    "CommandCam", "CommandCam.exe"
 ) + "\"";
 
 
