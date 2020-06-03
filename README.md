@@ -54,8 +54,17 @@ var opts = {
 
     quality: 100,
 
+    // Number of frames to capture
+    // More the frames, longer it takes to capture
+    // Use higher framerate for quality. Ex: 60
 
-    //Delay to take shot
+    frames: 60,
+
+
+    //Delay in seconds to take shot
+    //if the platform supports miliseconds
+    //use a float (0.1)
+    //Currently only on windows
 
     delay: 0,
 
@@ -154,6 +163,8 @@ NodeWebcam.capture( "test_picture", opts, function( err, data ) {
 
 --location Location to output webcam capture
 
+--list list available camera devices
+
 
 #Shorthand options
 
@@ -178,6 +189,13 @@ l: [ "--location" ]
 
 node-webcam --w 500 --h 500 --d 2 --l picture # ./bin/node-webcam.js
 
+```
+
+# Generated Documentation
+
+```
+# install yuidoc and run
+./bin/generate_doc.sh
 ```
 
 

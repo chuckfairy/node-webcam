@@ -52,6 +52,7 @@ NodeWebcam.create = function( options, type ) {
 };
 
 
+
 /**
  * Quick capture helper
  *
@@ -70,6 +71,24 @@ NodeWebcam.capture = function( location, options, callback ) {
     webcam.capture( location, callback );
 
     return webcam;
+
+};
+
+
+/**
+ * Camera list helper
+ *
+ * @method list
+ *
+ * @param {Function(Array<String>)} callback
+ *
+ */
+
+NodeWebcam.list = function( callback ) {
+
+    var cam = NodeWebcam.create({});
+
+    cam.list(callback);
 
 };
 

@@ -1,10 +1,11 @@
 {
     "name": "node-webcam",
-    "version": "0.4.6",
+    "version": "0.6.3",
     "description": "Cross platform webcam capture",
     "main": "index.js",
     "scripts": {
-        "test": "node_modules/.bin/mocha test"
+        "test": "node_modules/.bin/mocha test",
+        "postinstall": "node ./bin/postinstall.js"
     },
     "repository": {
         "type": "git",

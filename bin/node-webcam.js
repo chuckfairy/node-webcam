@@ -43,6 +43,8 @@ var opts = {
 
     skip: [ Number, 0 ],
 
+    list: [ Boolean, false ],
+
     location: Path,
 
 };
@@ -109,6 +111,15 @@ function main() {
     }
 
 
+    //Listing cameras helper
+
+    if( parsedOpts.list ) {
+
+        return list();
+
+    }
+
+
 
     //Location check
 
@@ -160,5 +171,14 @@ function help() {
     console.log( "Main", opts );
 
     console.log( "Shorthand", shorthand );
+
+}
+
+function list() {
+
+    NodeWebcam.list(function(cams) {
+        console.log("Found cameras");
+        console.log(cams.join("\n"));
+    });
 
 }

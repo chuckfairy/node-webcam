@@ -4,7 +4,7 @@
 "use strict";
 
 
-//cvlc v4l2:// :v4l2-vdev="/dev/video0" --sout '#transcode{vcodec=x264{keyint=60,idrint=2},vcodec=h264,vb=400,width=368,heigh=208,acodec=mp4a,ab=32 ,channels=2,samplerate=22100}:duplicate{dst=std{access=http{mime=video/x-ms-wmv},mux=asf,dst=:8082/stream.wmv}}' --no-sout-audio 
+//cvlc v4l2:// :v4l2-vdev="/dev/video0" --sout '#transcode{vcodec=x264{keyint=60,idrint=2},vcodec=h264,vb=400,width=368,heigh=208,acodec=mp4a,ab=32 ,channels=2,samplerate=22100}:duplicate{dst=std{access=http{mime=video/x-ms-wmv},mux=asf,dst=:8082/stream.wmv}}' --no-sout-audio
 
 
 var CHILD_PROCESS = require('child_process');
@@ -28,8 +28,14 @@ function VLCWebcam( options ) {
 
     Webcam.call( scope, scope.opts );
 
-    if(!scope.opts.device) {
-        throw new Error("VLC requires a device");
+    //if(!scope.opts.device) {
+        //throw new Error("VLC requires a device");
+    //}
+
+    if(!VLCWebcam.VideoOutputCommand[scope.opts.videoOutput]) {
+        throw new Error(
+            "Video output type invalid " + scope.opts.VideoOutputCommand
+        );
     }
 }
 
@@ -51,6 +57,9 @@ VLCWebcam.prototype.bin = "cvlc";
 VLCWebcam.prototype.generateVideoSh = function( location ) {
 
     var scope = this;
+    var opts = scope.opts;
+
+    var fps = "--v4l2-fps=" + opts.fps;
 
     var width = scope.opts.width
         ? "width=" + scope.opts.width + ","
@@ -62,27 +71,39 @@ VLCWebcam.prototype.generateVideoSh = function( location ) {
 
     var transcode = "#transcode{"
         + "vcodec=" + scope.opts.vcodec + ","
+        + "vb=300,"
+        + "fps=" + opts.fps + ","
+        + "scale=1,"
+        + "acodec=" + scope.opts.acodec + ","
+        + "ab=64,"
+        + "channels=2"
         //+ "vb=400,"
         //+ width
         //+ height
-        + "acodec=" + scope.opts.acodec //+ ","
         //+ "ab=32,channels=2,"
         //+ "samplerate=" + scope.opts.samplerate
         + "}";
 
-    var dup = ":std{access=http,"
-        //+ "mime=" + scope.opts.httpMime + ","
-        //+ "mux=" + scope.opts.mux + ","
-        + "dst=:" + scope.opts.streamPort + "/" + location + "}";
+    //@TODO pure stream
+    //var dup = ":std{access=http,"
+        //+ "mime=" + scope.opts.httpMime + "," //+ "mux=" + scope.opts.mux + ","
+        //+ "dst=:" + scope.opts.streamPort + "/" + location + "}";
 
     var audio = scope.opts.useAudio
         ? ""
         : "--no-sout-audio";
 
-    var sh = scope.bin + " v4l2:// "
-        + ':v4l2-vdev="' + scope.opts.device + '" '
-        + "--sout "
-        + "'" + transcode + dup + "' "
+    var outputTypeSetup = VLCWebcam.VideoOutputCommand[opts.videoOutput];
+
+
+
+    var sh = scope.bin + " v4l2://" + (scope.opts.device ? scope.opts.device : "")
+        + " " + fps
+        + " --sout "
+        + "'"
+            + transcode
+            + outputTypeSetup(opts)
+        + "' "
         + audio
     ;
 
@@ -97,23 +118,30 @@ VLCWebcam.Defaults = {
 
     delay: 1,
 
+    vcodec: "h264",
     //vcodec: "x264{keyint=60,idrint=2},vcodec=h264",
     //vcodec: "flv",
-    vcodec: "FLV1",
+    //vcodec: "FLV1",
     //vcodec: "mp4",
 
+    acodec: "mp4a",
     //acodec: "none",
-    acodec: "node",
 
     samplerate: 22100,
 
+    videoOutput: "rtmp",
+    //videoOutput: "file",
+
     streamPort: 8082,
+    streamPath: "rtmp://localhost:1935/live/stream",
 
     width: "",
 
     heigth: "",
 
-    useAudio: false,
+    useAudio: true,
+
+    fps: 60,
 
     //httpMime: "video/x-ms-wmv",
     httpMime: "video/flv",
@@ -122,6 +150,15 @@ VLCWebcam.Defaults = {
 
     mux: "asf"
     //mux: "ogg"
+
+};
+
+
+VLCWebcam.VideoOutputCommand = {
+
+    rtmp: function(opts) {
+        return `:std{access=rtmp,mux=ffmpeg{mux=flv},dst=${opts.streamPath}}`;
+    },
 
 };
 

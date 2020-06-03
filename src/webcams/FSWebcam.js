@@ -76,6 +76,11 @@ FSWebcam.prototype.generateSh = function( location ) {
     var resolution = " -r "
         + scope.opts.width + "x" + scope.opts.height;
 
+    // Adding frame rate
+    var frames = scope.opts.frames
+        ? "-F " + scope.opts.frames
+        : "";
+
     var output = "--" + scope.opts.output;
 
     var quality = scope.opts.quality;
@@ -112,8 +117,10 @@ FSWebcam.prototype.generateSh = function( location ) {
 
     }
 
+
     var setValues = scope.getControlSetString( scope.opts.setValues );
 
+    var verbose = scope.opts.verbose ? "" : " -q"
 
     // Use memory if null location
 
@@ -121,8 +128,10 @@ FSWebcam.prototype.generateSh = function( location ) {
         ? "- -"
         : location;
 
-    var sh = scope.bin + " -q "
+    var sh = scope.bin + " "
+        + verbose + " "
         + resolution + " "
+        + frames + " "
         + output + " "
         + quality + " "
         + delay + " "
@@ -163,13 +172,15 @@ FSWebcam.prototype.getControlSetString = function( setValues ) {
 
         if( ! val ) { continue; }
 
-        str += setName + "=" + val;
+        // Add a space to separate values if there are multiple control values being set
+        if (str.length > 0) {
+            str += " "
+        }
+        str += `-s ${setName}=${val}`;
 
     }
 
     return str
-        ?"-s " + str
-        : "";
 
 };
 
@@ -214,7 +225,7 @@ FSWebcam.Defaults = {
 
     skip: false,
 
-    setValues: {}
+    setValues: {},
 
 };
 

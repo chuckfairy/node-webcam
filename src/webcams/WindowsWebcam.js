@@ -32,16 +32,20 @@ function WindowsWebcam( options ) {
 
     Webcam.call( scope, scope.opts );
 
+    //command cam uses miliseconds
+
+    scope.opts.delay = scope.opts.delay * 1000;
+
 }
 
 WindowsWebcam.prototype = Object.create( Webcam.prototype );
 
 WindowsWebcam.prototype.constructor = WindowsWebcam;
 
-WindowsWebcam.prototype.bin = Path.resolve(
+WindowsWebcam.prototype.bin = "\"" + Path.resolve(
     __dirname, "..", "bindings",
-    "CommandCam", "Commandcam.exe"
-);
+    "CommandCam", "CommandCam.exe"
+) + "\"";
 
 
 /**
