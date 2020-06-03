@@ -96,13 +96,12 @@ VLCWebcam.prototype.generateVideoSh = function( location ) {
     var outputTypeSetup = VLCWebcam.VideoOutputCommand[opts.videoOutput];
 
 
-
     var sh = scope.bin + " v4l2://" + (scope.opts.device ? scope.opts.device : "")
         + " " + fps
         + " --sout "
         + "'"
             + transcode
-            + outputTypeSetup(opts)
+            + outputTypeSetup(opts, location)
         + "' "
         + audio
     ;
@@ -155,6 +154,10 @@ VLCWebcam.Defaults = {
 
 
 VLCWebcam.VideoOutputCommand = {
+
+    file: function(opts, location) {
+        return `:duplicate{dst=standard{access=file,mux=ps,dst=${location}}}`;
+    },
 
     rtmp: function(opts) {
         return `:std{access=rtmp,mux=ffmpeg{mux=flv},dst=${opts.streamPath}}`;

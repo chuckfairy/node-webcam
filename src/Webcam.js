@@ -313,13 +313,17 @@ Webcam.prototype = {
         var scope = this;
 
         if( ! scope.recording ) {
-            callback(false);
+            callback && callback(false);
             return;
         }
 
-        scope.recording.kill();
+        if( scope.opts.verbose ) {
+            console.log("Stopping recording");
+        }
 
-        callback(true);
+        scope.recording.kill(9);
+
+        callback && callback(true);
 
     },
 
