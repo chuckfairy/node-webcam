@@ -253,17 +253,17 @@ Webcam.prototype = {
      *
      * @method capture
      *
-     * @param {String} location / most likely the stream location
+     * @param {Object} options for recording
      * @param {Function} callback
      * @param {Function} errorCallback
      * @return void
      *
      */
 
-    record: function( location, callback, errorCallback ) {
+    record: function( options, callback, errorCallback ) {
 
         var scope = this;
-        var sh = scope.generateVideoSh(location);
+        var sh = scope.generateVideoSh(options.location || "", options);
 
         if( scope.opts.verbose ) {
 
@@ -271,9 +271,9 @@ Webcam.prototype = {
 
         }
 
-        scope.recording = CHILD_PROCESS.exec(sh, []);
+        var child = scope.recording = CHILD_PROCESS.exec(sh, []);
 
-        scope.recording.on("message", function() {
+        child.on("message", function() {
 
             if( scope.opts.verbose ) {
 
@@ -283,7 +283,17 @@ Webcam.prototype = {
 
         });
 
-        scope.recording.on("error", function(err, data) {
+        child.stdout.on('data', function (data) {
+
+            if( scope.opts.verbose ) {
+
+                console.log( arguments );
+
+            }
+
+        });
+
+        child.on("error", function(err, data) {
 
             if( scope.opts.verbose ) {
 
@@ -321,7 +331,10 @@ Webcam.prototype = {
             console.log("Stopping recording");
         }
 
-        scope.recording.kill(9);
+
+        console.log(scope.recording.pid);
+        CHILD_PROCESS.spawn("killall", ["vlc"]);
+        //scope.recording.kill(9);
 
         callback && callback(true);
 
@@ -350,7 +363,7 @@ Webcam.prototype = {
      *
      */
 
-    generateVideoSh: function( location ) { return ""; },
+    generateVideoSh: function( location, options ) { return ""; },
 
 
     /**

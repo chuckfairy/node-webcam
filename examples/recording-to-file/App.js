@@ -15,7 +15,7 @@ const Webcam = NodeWebcam.create({
     //height: 208
 }, "vlc");
 
-const RECORDING_TIME = 5 * 1000;
+const RECORDING_TIME = 10 * 1000;
 
 const FILE_LOCATION = __dirname + "/output/test.mp4";
 
@@ -23,10 +23,11 @@ main();
 
 function main() {
 
-    Webcam.record(FILE_LOCATION);
+    var options = {
+        time: RECORDING_TIME,
+        location: FILE_LOCATION,
+    };
 
-    //setTimeout(function() {
-        //Webcam.stopRecording();
-    //}, RECORDING_TIME);
+    Webcam.record(options, console.log);
 
 }

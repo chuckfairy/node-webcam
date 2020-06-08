@@ -54,7 +54,7 @@ VLCWebcam.prototype.bin = "cvlc";
  * @param String location
  *
  */
-VLCWebcam.prototype.generateVideoSh = function( location ) {
+VLCWebcam.prototype.generateVideoSh = function( location, options ) {
 
     var scope = this;
     var opts = scope.opts;
@@ -95,8 +95,12 @@ VLCWebcam.prototype.generateVideoSh = function( location ) {
 
     var outputTypeSetup = VLCWebcam.VideoOutputCommand[opts.videoOutput];
 
+    var bin = options.time
+        ? "timeout " + options.time / 1000 + " " + scope.bin
+        : scope.bin
 
-    var sh = scope.bin + " v4l2://" + (scope.opts.device ? scope.opts.device : "")
+
+    var sh = bin + " v4l2://" + (scope.opts.device ? scope.opts.device : "")
         + " " + fps
         + " --sout "
         + "'"
