@@ -263,6 +263,7 @@ Webcam.prototype = {
     record: function( options, callback, errorCallback ) {
 
         var scope = this;
+        options = options || {};
         var sh = scope.generateVideoSh(options.location || "", options);
 
         if( scope.opts.verbose ) {

@@ -301,6 +301,25 @@ var opts = {};
 var cam = new FSWebcam( opts );
 ```
 
+
+## [VLCWebcam](https://github.com/chuckfairy/node-webcam/blob/master/src/webcams/VLCWebcam.js)
+
+Not too much control and pretty new to the project. See
+
+- [examples/rtmp-with-node-media-server/App.js](https://github.com/chuckfairy/node-webcam/blob/master/examples/rtmp-with-node-media-server/App.js)
+- [examples/recording-to-file/App.js](https://github.com/chuckfairy/node-webcam/blob/master/examples/recording-to-file/App.js)
+
+
+### Extra options
+
+```
+streamPath: "rtmp://localhost:1935/live/stream",
+vcodec: "h264",
+acodec: "mp4a",
+useAudio: true,
+```
+
+
 # What's next?
 
 * Video capture functionality

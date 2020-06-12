@@ -99,6 +99,7 @@ VLCWebcam.prototype.generateVideoSh = function( location, options ) {
         ? "timeout " + options.time / 1000 + " " + scope.bin
         : scope.bin
 
+    //var runTime = "--run-time=300 --stop-time=300";
 
     var sh = bin + " v4l2://" + (scope.opts.device ? scope.opts.device : "")
         + " " + fps
@@ -118,8 +119,6 @@ VLCWebcam.prototype.generateVideoSh = function( location, options ) {
 //Defaults
 
 VLCWebcam.Defaults = {
-
-    delay: 1,
 
     vcodec: "h264",
     //vcodec: "x264{keyint=60,idrint=2},vcodec=h264",
