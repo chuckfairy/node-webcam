@@ -255,12 +255,11 @@ Webcam.prototype = {
      *
      * @param {Object} options for recording
      * @param {Function} callback
-     * @param {Function} errorCallback
      * @return void
      *
      */
 
-    record: function( options, callback, errorCallback ) {
+    record: function( options, callback ) {
 
         var scope = this;
         options = options || {};
@@ -302,7 +301,7 @@ Webcam.prototype = {
 
             }
 
-            errorCallback && errorCallback(err);
+            callback && callback(err);
 
         });
 
@@ -333,9 +332,7 @@ Webcam.prototype = {
         }
 
 
-        console.log(scope.recording.pid);
-        CHILD_PROCESS.spawn("killall", ["vlc"]);
-        //scope.recording.kill(9);
+        scope.recording.kill();
 
         callback && callback(true);
 
