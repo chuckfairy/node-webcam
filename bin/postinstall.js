@@ -18,7 +18,7 @@ function init() {
 	const file = fs.createWriteStream("src/bindings/CommandCam/CommandCam.exe");
 
 	//Github release url create
-	const repo = config.author + "/" + config.name;
+	const repo = config.author.name + "/" + config.name;
 	const url = "https://github.com/" + repo + "/releases/download/" + tag + "/CommandCam.exe";
 
 	//Download exe release
