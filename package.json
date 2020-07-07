@@ -1,6 +1,6 @@
 {
     "name": "node-webcam",
-    "version": "0.6.3",
+    "version": "0.6.4",
     "description": "Cross platform webcam capture",
     "main": "index.js",
     "scripts": {
@@ -20,7 +20,11 @@
         "camera",
         "webcamera"
     ],
-    "author": "chuckfairy",
+    "author": {
+        "name": "chuckfairy",
+        "email": "charlieabeling@gmail.com",
+        "url": "chuckfairy.com"
+    },
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/chuckfairy/node-webcam/issues"
