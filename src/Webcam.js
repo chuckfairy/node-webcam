@@ -104,11 +104,66 @@ Webcam.prototype = {
      *
      * @method list
      *
-     * @param {Function} callback returns a list of camers
+     * @param {Function} callback returns a list of cameras
      *
      */
 
     list: CameraUtils.getCameras,
+
+
+    /**
+     * List available camera controls
+     *
+     * @method listControls
+     *
+     * @param {Function(Array<CameraControl>)} callback Function that receives
+     * camera controls
+     *
+     * @param {String} stdoutOverride fswebcam command output override (for
+     * testing purposes)
+     *
+     */
+    listControls: function ( callback, stdoutOverride ) {
+
+        var scope = this;
+
+        var sh;
+
+        try {
+
+            sh = scope.getListControlsSh();
+        
+        } catch(_) {
+
+            callback && callback( [] );
+
+        }
+
+        //Shell execute
+
+        var shArgs = {
+            maxBuffer: 1024 * 10000
+        };
+
+        EXEC( sh, shArgs, function( err, out, derr ) {
+
+            if( err ) {
+
+                return callback && callback( err );
+
+            }
+
+            if( scope.opts.verbose && derr ) {
+
+                console.log( derr );
+
+            }
+
+            scope.parseListControls( stdoutOverride || out + derr, callback );
+
+        })
+
+    },
 
 
     /**

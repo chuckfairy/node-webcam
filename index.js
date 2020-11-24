@@ -91,6 +91,34 @@ NodeWebcam.list = function( callback ) {
 
 };
 
+/**
+ * @typedef CameraControl
+ * @type {Object}
+ * @param {String} name Control name, as it should appear in the setValues object
+ * @param {String} type Either "range" or "list"
+ * @param {Number} min For "range" controls, minimum control value
+ * @param {Number} max For "range" controls, maximum control value
+ * @param {Array(<String>)} opts For "list" controls, available control options
+ *
+ */
+
+/**
+ * Camera options helper
+ *
+ * @method listControls
+ *
+ * @param {Function(Array<CameraControl>)} callback
+ *
+ */
+
+NodeWebcam.listControls = function( callback ) {
+
+    var cam = NodeWebcam.create({});
+
+    cam.listControls(callback);
+
+};
+
 
 //Export
 
