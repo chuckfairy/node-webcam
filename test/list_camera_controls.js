@@ -27,6 +27,8 @@ describe( "Webcam List Controls", function() {
 
 function listControlTest( done ) {
 
+    this.timeout( 6000 );
+
     var stdout = [
         "[1m--- Opening /dev/video0...",
         "[0m[0mTrying source module v4l2...",
@@ -72,7 +74,7 @@ function listControlTest( done ) {
         { name: "Exposure (Absolute)", type: "range", min: 1, max: 5000},
         { name: "Exposure, Auto Priority", type: "list", opts: ["True", "False"]},
     ];
-    
+
     var Webcam = NodeWebcam.Factory.create( {} );
 
     Webcam.listControls( function( actualControls ) {
@@ -87,6 +89,8 @@ function listControlTest( done ) {
 
 
 function listControlTestNoCamera( done ) {
+
+    this.timeout( 6000 );
 
     var stdout = [
         "[1m--- Opening /dev/video0...",

@@ -45,6 +45,8 @@ var opts = {
 
     list: [ Boolean, false ],
 
+    listControls: [ Boolean, false ],
+
     location: Path,
 
 };
@@ -120,6 +122,13 @@ function main() {
     }
 
 
+    if( parsedOpts.listControls ) {
+
+        return listControls();
+
+    }
+
+
 
     //Location check
 
@@ -179,6 +188,15 @@ function list() {
     NodeWebcam.list(function(cams) {
         console.log("Found cameras");
         console.log(cams.join("\n"));
+    });
+
+}
+
+function listControls() {
+
+    NodeWebcam.listControls(function(controls) {
+        console.log("Listing Controls");
+        console.log(controls);
     });
 
 }

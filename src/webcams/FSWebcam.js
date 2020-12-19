@@ -203,7 +203,7 @@ FSWebcam.prototype.getListControlsSh = function() {
  * Parse output of list camera controls shell command
  *
  * @param {String} stdout Output of the list camera control shell command
- * 
+ *
  * @param {Function(Array<CameraControl>)} callback Function that receives
  * camera controls
  *
@@ -232,28 +232,28 @@ FSWebcam.prototype.parseListControls = function ( stdout, callback ) {
     for ( var line of stdout.split( /\n|\r|\n\r|\r\n/ ) ) {
 
         line = line.slice( prefixLength ).trim();
-        
+
         inOptions = inOptions && line.startsWith( "-" ) ? false : inOptions;
-        
+
         if ( inOptions ) {
-        
+
             var rangeGroups = line.match( rangeRegExp );
-        
+
             if ( rangeGroups ) {
-        
+
                 var name = rangeGroups.groups.name;
-        
+
                 var minRange = parseInt( rangeGroups.groups.min );
-        
+
                 var maxRange = parseInt( rangeGroups.groups.max );
-        
+
                 cameraControls.push({
                     name: name,
                     type: "range",
                     min: minRange,
                     max: maxRange,
                 });
-        
+
             } else if ( line.lastIndexOf( "|" ) !== -1 ) {
 
                 var opts = [];
@@ -261,67 +261,67 @@ FSWebcam.prototype.parseListControls = function ( stdout, callback ) {
                 var opt = "";
 
                 var name = "";
-                
+
                 var idx = line.lastIndexOf( "|" );
-                
+
                 while ( idx !== -1 ) {
-                
+
                     opt = line.slice( idx + 1 ).trim();
-                
+
                     opts.push( opt );
-                
+
                     var firstIdx = line.indexOf( opt );
-                
+
                     var lastIdx = line.lastIndexOf( opt );
-                
+
                     if ( !name && firstIdx !== -1 && firstIdx !== lastIdx ) {
-                
+
                         name = line.slice( 0, firstIdx ).trim();
-                
+
                         line = line.slice( firstIdx + opt.length );
-                
+
                         idx = line.lastIndexOf( "|" );
                     }
-                
+
                     line = line.slice( 0, idx ).trim();
-                
+
                     idx = line.lastIndexOf( "|" );
                 }
-                
+
                 if ( name && line.trim() ) {
-                
+
                     opts.push( line.trim() );
-                
+
                 } else if ( !name ) {
-                
+
                     // Find largest number of words with two consecutive matches
-                
+
                     var words = line
                         .split( " " )
                         .filter( function ( item ) {
                             return Boolean( item );
                         })
                         .reverse();
-                
+
                         var num_words = 1;
-                
+
                         opt = words.slice( 0, num_words ).reverse().join( " " );
-                
+
                         var re = new RegExp( opt + "\\s+" + opt );
-                
+
                     while ( !re.test( line ) ) {
-                
+
                         num_words += 1;
-                
+
                         opt = words.slice( 0, num_words ).reverse().join( " " );
-                
+
                         re = new RegExp( opt + "\\s+" + opt );
                     }
-                
+
                     var firstIdx = line.indexOf( opt );
-                
+
                     name = line.slice( 0, firstIdx ).trim();
-                
+
                     opts.push( opt );
                 }
 
