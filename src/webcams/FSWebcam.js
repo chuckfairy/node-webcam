@@ -89,6 +89,18 @@ FSWebcam.prototype.generateSh = function( location ) {
         ? "-D " + scope.opts.delay
         : "";
 
+    var title = scope.opts.title
+        ? "--title " + scope.opts.title
+        : "";
+
+    var subtitle = scope.opts.subtitle
+        ? "--subtitle " + scope.opts.subtitle
+        : "";
+
+    var timestamp = scope.opts.timestamp
+        ? "--timestamp " + scope.opts.timestamp
+        : "";
+
     var device = scope.opts.device
         ? "-d " + scope.opts.device
         : "";
@@ -135,6 +147,9 @@ FSWebcam.prototype.generateSh = function( location ) {
         + output + " "
         + quality + " "
         + delay + " "
+        + title + " "
+        + subtitle + " "
+        + timestamp + " "
         + device + " "
         + grey + " "
         + rotation + " "

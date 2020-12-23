@@ -628,6 +628,21 @@ Webcam.Defaults = {
     delay: 0,
 
 
+    //Title of the saved picture
+
+    title: false,
+
+
+    //Subtitle of the saved picture
+
+    subtitle: false,
+
+
+    //Timestamp of the saved picture
+
+    timestamp: false,
+
+
     //Save shots in memory
 
     saveShots: true,
