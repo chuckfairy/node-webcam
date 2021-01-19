@@ -194,7 +194,9 @@ FSWebcam.prototype.getListControlsSh = function() {
 
     var scope = this;
 
-    return scope.bin + " --list-controls";
+    var devSwitch = scope.opts.device ? " --device=" + scope.opts.device.trim() : "";
+
+    return scope.bin + devSwitch + " --list-controls";
 
 }
 
