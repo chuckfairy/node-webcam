@@ -51,8 +51,7 @@ FSWebcam.prototype.createShot = function( location, data ) {
 
     if( location === null ) {
 
-        console.log( "TEST", data );
-        var data = new Buffer( data );
+        var data = Buffer.from( data );
 
     }
 
