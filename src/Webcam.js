@@ -132,7 +132,7 @@ Webcam.prototype = {
         try {
 
             sh = scope.getListControlsSh();
-        
+
         } catch(_) {
 
             callback && callback( [] );

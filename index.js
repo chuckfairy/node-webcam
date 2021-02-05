@@ -107,13 +107,14 @@ NodeWebcam.list = function( callback ) {
  *
  * @method listControls
  *
+ * @param {String} device
  * @param {Function(Array<CameraControl>)} callback
  *
  */
 
-NodeWebcam.listControls = function( callback ) {
+NodeWebcam.listControls = function( device, callback ) {
 
-    var cam = NodeWebcam.create({});
+    var cam = NodeWebcam.create({device});
 
     cam.listControls(callback);
 

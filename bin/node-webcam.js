@@ -124,7 +124,7 @@ function main() {
 
     if( parsedOpts.listControls ) {
 
-        return listControls();
+        return listControls(parsedOpts.device);
 
     }
 
@@ -192,9 +192,9 @@ function list() {
 
 }
 
-function listControls() {
+function listControls(device) {
 
-    NodeWebcam.listControls(function(controls) {
+    NodeWebcam.listControls(device, function(controls) {
         console.log("Listing Controls");
         console.log(controls);
     });
