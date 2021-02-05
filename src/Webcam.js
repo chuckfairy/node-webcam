@@ -132,7 +132,7 @@ Webcam.prototype = {
         try {
 
             sh = scope.getListControlsSh();
-        
+
         } catch(_) {
 
             callback && callback( [] );
@@ -504,7 +504,7 @@ Webcam.prototype = {
         var image = "data:image/"
             + scope.opts.output
             + ";base64,"
-            + new Buffer( shotBuffer ).toString( "base64" );
+            + Buffer.from( shotBuffer ).toString( "base64" );
 
         return image;
 

@@ -194,9 +194,9 @@ function list() {
 
 function listControls(device) {
 
-    NodeWebcam.listControls(function(controls) {
+    NodeWebcam.listControls(device, function(controls) {
         console.log("Listing Controls");
         console.log(controls);
-    }, device);
+    });
 
 }
