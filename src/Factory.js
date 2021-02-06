@@ -25,7 +25,9 @@ var Factory = new function() {
 
     scope.create = function( options, type ) {
 
-        var p = type || Factory.Platform;
+        options = options || {};
+
+        var p = type || options.driverType || Factory.Platform;
 
         var Type = Factory.Types[ p ];
 
@@ -56,7 +58,9 @@ Factory.Types = {
 
     win32: WindowsWebcam,
 
-    win64: WindowsWebcam
+    win64: WindowsWebcam,
+
+    gphoto2: require("./webcams/GPhoto2Webcam.js"),
 
 };
 

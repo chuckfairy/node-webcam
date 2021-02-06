@@ -35,7 +35,8 @@ var NodeWebcam = require( "./../../" );
 
 var Webcam = NodeWebcam.create({
     callbackReturn: "base64",
-    saveShots: false
+    saveShots: false,
+    //driverType: "gphoto2"
 });
 
 
@@ -49,7 +50,7 @@ function init() {
 
     setupWebcam();
 
-    console.log( "Visit localhost:9090" );
+    console.log( "Visit http://localhost:9090" );
 
 }
 
