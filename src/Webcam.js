@@ -68,6 +68,17 @@ Webcam.prototype = {
 
 
     /**
+     * Main opts from construction
+     *
+     * @property opts
+     * @type {Object}
+     *
+     */
+
+    recording: false,
+
+
+    /**
      * Basic camera instance clone
      *
      * @method clone
@@ -293,6 +304,97 @@ Webcam.prototype = {
 
 
     /**
+     * Capture shot
+     *
+     * @method capture
+     *
+     * @param {Object} options for recording
+     * @param {Function} callback
+     * @return void
+     *
+     */
+
+    record: function( options, callback ) {
+
+        var scope = this;
+        options = options || {};
+        var sh = scope.generateVideoSh(options.location || "", options);
+
+        if( scope.opts.verbose ) {
+
+            console.log( sh );
+
+        }
+
+        var child = scope.recording = CHILD_PROCESS.exec(sh, []);
+
+        child.on("message", function() {
+
+            if( scope.opts.verbose ) {
+
+                console.log( arguments );
+
+            }
+
+        });
+
+        child.stdout.on('data', function (data) {
+
+            if( scope.opts.verbose ) {
+
+                console.log( arguments );
+
+            }
+
+        });
+
+        child.on("error", function(err, data) {
+
+            if( scope.opts.verbose ) {
+
+                console.log("ERROR", err);
+
+            }
+
+            callback && callback(err);
+
+        });
+
+    },
+
+
+    /**
+     * Stop current recording of webcam
+     *
+     * @method stopRecording
+     *
+     * @param {Function} callback
+     * @return void
+     *
+     */
+
+    stopRecording: function( callback ) {
+
+        var scope = this;
+
+        if( ! scope.recording ) {
+            callback && callback(false);
+            return;
+        }
+
+        if( scope.opts.verbose ) {
+            console.log("Stopping recording");
+        }
+
+
+        scope.recording.kill();
+
+        callback && callback(true);
+
+    },
+
+
+    /**
      * Generate cli command string
      *
      * @method generateSh
@@ -302,6 +404,19 @@ Webcam.prototype = {
      */
 
     generateSh: function( location ) { return ""; },
+
+
+    /**
+     * Generate cli command string for a video record
+     * if a cli camera
+     *
+     * @method generateVideoSh
+     *
+     * @return {String}
+     *
+     */
+
+    generateVideoSh: function( location, options ) { return ""; },
 
 
     /**
@@ -669,7 +784,17 @@ Webcam.Defaults = {
 
     //Logging
 
-    verbose: false
+    verbose: false,
+
+
+    //Stream port for some recording types
+
+    streamPort: 8082,
+
+
+    //Audio usage in recording
+
+    useAudio: false,
 
 };
 
