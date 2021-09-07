@@ -206,7 +206,7 @@ Webcam.prototype = {
         if(
             location === null
             && scope.opts.callbackReturn ===
-                Webcam.CallbackReturnTypes.buffer
+                Webcam.CallbackReturnTypes.location
         ) {
 
             console.warn(
