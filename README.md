@@ -18,7 +18,6 @@ sudo apt-get install fswebcam
 #fswebcam requires a build from the AUR, it is not listed for installation on pacman/pamac
 
 sudo pamac build fswebcam
-
 ```
 
 ### Mac OSX
