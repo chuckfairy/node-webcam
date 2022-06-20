@@ -71,13 +71,27 @@ FSWebcam.prototype.generateSh = function (location) {
 
   var delay = scope.opts.delay ? "-D " + scope.opts.delay : "";
 
-  var title = scope.opts.title ? "--title " + scope.opts.title : "";
+  var title = scope.opts.title
+    ? "--title " + Utils.formatArg(scope.opts.title)
+    : "";
 
-  var subtitle = scope.opts.subtitle ? "--subtitle " + scope.opts.subtitle : "";
+  var subtitle = scope.opts.subtitle
+    ? "--subtitle " + Utils.formatArg(scope.opts.subtitle)
+    : "";
 
   var timestamp = scope.opts.timestamp
-    ? "--timestamp " + scope.opts.timestamp
+    ? "--timestamp " + Utils.formatArg(scope.opts.timestamp)
     : "";
+
+  const bannerColour = scope.opts.bannerColour
+    ? "--banner-colour" + scope.opts.bannerColour
+    : "";
+
+  const lineColour = scope.opts.lineColour
+    ? "--line-colour" + scope.opts.lineColour
+    : "";
+
+  const info = scope.opts.info ? "--info" + scope.opts.info : "";
 
   var device = scope.opts.device ? "-d " + scope.opts.device : "";
 
@@ -126,6 +140,12 @@ FSWebcam.prototype.generateSh = function (location) {
     subtitle +
     " " +
     timestamp +
+    " " +
+    bannerColour +
+    " " +
+    lineColour +
+    " " +
+    info +
     " " +
     device +
     " " +

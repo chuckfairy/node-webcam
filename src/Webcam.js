@@ -563,6 +563,8 @@ Webcam.OutputTypes = {
   png: "png",
 
   bmp: "bmp",
+
+  webp: "webp",
 };
 
 /**
