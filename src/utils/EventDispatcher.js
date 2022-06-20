@@ -3,110 +3,93 @@
  * Used primarily as an inheritance via apply
  *
  */
-EventDispatcher = function() {};
+EventDispatcher = function () {};
 
 EventDispatcher.prototype = {
+  constructor: EventDispatcher,
 
-	constructor: EventDispatcher,
+  apply: function (object) {
+    object.on = EventDispatcher.prototype.on;
+    object.hasListener = EventDispatcher.prototype.hasListener;
+    object.removeListener = EventDispatcher.prototype.removeListener;
+    object.dispatch = EventDispatcher.prototype.dispatch;
 
-	apply: function ( object ) {
+    return object;
+  },
 
-		object.on = EventDispatcher.prototype.on;
-		object.hasListener = EventDispatcher.prototype.hasListener;
-		object.removeListener = EventDispatcher.prototype.removeListener;
-		object.dispatch = EventDispatcher.prototype.dispatch;
+  on: function (type, listener) {
+    if (this._listeners === undefined) {
+      this._listeners = {};
+    }
 
-        return object;
+    var listeners = this._listeners;
 
-	},
+    if (listeners[type] === undefined) {
+      listeners[type] = [];
+    }
 
-	on: function ( type, listener ) {
+    if (listeners[type].indexOf(listener) === -1) {
+      listeners[type].push(listener);
+    }
+  },
 
-		if ( this._listeners === undefined ) { this._listeners = {}; }
+  hasListener: function (type, listener) {
+    if (this._listeners === undefined) {
+      return false;
+    }
 
-		var listeners = this._listeners;
+    var listeners = this._listeners;
 
-		if ( listeners[ type ] === undefined ) {
+    if (
+      listeners[type] !== undefined &&
+      listeners[type].indexOf(listener) !== -1
+    ) {
+      return true;
+    }
 
-			listeners[ type ] = [];
+    return false;
+  },
 
-		}
+  removeListener: function (type, listener) {
+    if (this._listeners === undefined) {
+      return;
+    }
 
-		if ( listeners[ type ].indexOf( listener ) === - 1 ) {
+    var listeners = this._listeners;
+    var listenerArray = listeners[type];
 
-			listeners[ type ].push( listener );
+    if (listenerArray !== undefined) {
+      var index = listenerArray.indexOf(listener);
 
-		}
+      if (index !== -1) {
+        listenerArray.splice(index, 1);
+      }
+    }
+  },
 
-	},
+  dispatch: function (event) {
+    if (this._listeners === undefined) {
+      return;
+    }
 
-	hasListener: function ( type, listener ) {
+    var listeners = this._listeners;
+    var listenerArray = listeners[event.type];
 
-		if ( this._listeners === undefined ) { return false; }
+    if (listenerArray !== undefined) {
+      event.target = this;
 
-		var listeners = this._listeners;
+      var array = [];
+      var length = listenerArray.length;
 
-		if ( listeners[ type ] !== undefined && listeners[ type ].indexOf( listener ) !== - 1 ) {
+      for (var i = 0; i < length; i++) {
+        array[i] = listenerArray[i];
+      }
 
-			return true;
-
-		}
-
-		return false;
-
-	},
-
-	removeListener: function ( type, listener ) {
-
-		if ( this._listeners === undefined ) { return; }
-
-		var listeners = this._listeners;
-		var listenerArray = listeners[ type ];
-
-		if ( listenerArray !== undefined ) {
-
-			var index = listenerArray.indexOf( listener );
-
-			if ( index !== - 1 ) {
-
-				listenerArray.splice( index, 1 );
-
-			}
-
-		}
-
-	},
-
-	dispatch: function ( event ) {
-
-		if ( this._listeners === undefined ) { return; }
-
-		var listeners = this._listeners;
-		var listenerArray = listeners[ event.type ];
-
-		if ( listenerArray !== undefined ) {
-
-			event.target = this;
-
-			var array = [];
-			var length = listenerArray.length;
-
-			for ( var i = 0; i < length; i++ ) {
-
-				array[ i ] = listenerArray[ i ];
-
-			}
-
-			for ( var i = 0; i < length; i++ ) {
-
-				array[ i ].call( this, event );
-
-			}
-
-		}
-
-	}
-
+      for (var i = 0; i < length; i++) {
+        array[i].call(this, event);
+      }
+    }
+  },
 };
 
 module.exports = EventDispatcher;

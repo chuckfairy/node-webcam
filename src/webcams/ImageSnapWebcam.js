@@ -8,46 +8,38 @@
  */
 "use strict";
 
-var CHILD_PROCESS = require('child_process');
+var CHILD_PROCESS = require("child_process");
 
 var EXEC = CHILD_PROCESS.exec;
 
-var Webcam = require( "./../Webcam.js" );
+var Webcam = require("./../Webcam.js");
 
-var Utils = require( "./../utils/Utils.js" );
-
+var Utils = require("./../utils/Utils.js");
 
 //Main class
 
-function ImageSnapWebcam( options ) {
+function ImageSnapWebcam(options) {
+  var scope = this;
 
-    var scope = this;
+  scope.opts = Utils.setDefaults(options, ImageSnapWebcam.Defaults);
 
-    scope.opts = Utils.setDefaults( options, ImageSnapWebcam.Defaults );
+  //Without a delay imagesnap will not work
+  //Test on macbook 2015 13' retina
 
+  if (scope.opts.delay < 1) {
+    scope.opts.delay = 1;
+  }
 
-    //Without a delay imagesnap will not work
-    //Test on macbook 2015 13' retina
+  //Construct
 
-    if( scope.opts.delay < 1 ) {
-
-        scope.opts.delay = 1;
-
-    }
-
-
-    //Construct
-
-    Webcam.call( scope, scope.opts );
-
+  Webcam.call(scope, scope.opts);
 }
 
-ImageSnapWebcam.prototype = Object.create( Webcam.prototype );
+ImageSnapWebcam.prototype = Object.create(Webcam.prototype);
 
 ImageSnapWebcam.prototype.constructor = ImageSnapWebcam;
 
 ImageSnapWebcam.prototype.bin = "imagesnap";
-
 
 /**
  * @override
@@ -57,32 +49,20 @@ ImageSnapWebcam.prototype.bin = "imagesnap";
  * @param String location
  *
  */
-ImageSnapWebcam.prototype.generateSh = function( location ) {
+ImageSnapWebcam.prototype.generateSh = function (location) {
+  var scope = this;
 
-    var scope = this;
+  var verbose = scope.opts.verbose ? "-v" : "-q";
 
-    var verbose = scope.opts.verbose
-        ? "-v"
-        : "-q";
+  var delay = scope.opts.delay ? "-w " + scope.opts.delay : "";
 
-    var delay = scope.opts.delay
-        ? "-w " + scope.opts.delay
-        : "";
+  var device = scope.opts.device ? "-d '" + scope.opts.device + "'" : "";
 
-    var device = scope.opts.device
-        ? "-d '" + scope.opts.device + "'"
-        : "";
+  var sh =
+    scope.bin + " " + delay + " " + device + " " + verbose + " " + location;
 
-    var sh = scope.bin + " "
-        + delay + " "
-        + device + " "
-        + verbose + " "
-        + location;
-
-    return sh;
-
+  return sh;
 };
-
 
 /**
  * @Override
@@ -92,52 +72,40 @@ ImageSnapWebcam.prototype.generateSh = function( location ) {
  * @param Function callback
  *
  */
-ImageSnapWebcam.prototype.list = function( callback ) {
+ImageSnapWebcam.prototype.list = function (callback) {
+  var scope = this;
 
-    var scope = this;
+  var sh = scope.bin + " -l";
 
-    var sh = scope.bin + " -l";
+  var cams = [];
 
-    var cams = [];
+  EXEC(sh, function (err, data, out) {
+    var lines = data.split("\n");
 
-    EXEC( sh, function( err, data, out ) {
+    var ll = lines.length;
 
-        var lines = data.split( "\n" );
+    for (var i = 0; i < ll; i++) {
+      var line = lines[i];
 
-        var ll = lines.length;
+      if (line === "Video Devices:" || !line) {
+        continue;
+      }
 
-        for( var i = 0; i < ll; i ++ ) {
+      //imagesnap update adds extra stuff
+      line = line.replace(/.*?\[(.*?)\].*/, "$1");
 
-            var line = lines[ i ];
+      cams.push(line);
+    }
 
-            if( line === "Video Devices:" || ! line ) {
-
-                continue;
-
-            }
-
-            //imagesnap update adds extra stuff
-            line = line.replace(/.*?\[(.*?)\].*/, "$1");
-
-            cams.push( line );
-
-        }
-
-        callback && callback( cams );
-
-    });
-
+    callback && callback(cams);
+  });
 };
-
 
 //Defaults
 
 ImageSnapWebcam.Defaults = {
-
-    delay: 1
-
+  delay: 1,
 };
-
 
 //Export
 

@@ -6,34 +6,28 @@
  */
 "use strict";
 
-
 /**
  * @class API
  *
  */
 
 var NodeWebcam = {
+  version: "0.4.1",
 
-    version: "0.4.1",
+  REVISION: 4,
 
-    REVISION: 4,
+  Factory: require("./src/Factory.js"),
 
-    Factory: require( "./src/Factory.js" ),
+  Webcam: require("./src/Factory.js"),
 
-    Webcam: require( "./src/Factory.js" ),
+  FSWebcam: require("./src/webcams/FSWebcam.js"),
 
-    FSWebcam: require( "./src/webcams/FSWebcam.js" ),
+  ImageSnapWebcam: require("./src/webcams/ImageSnapWebcam.js"),
 
-    ImageSnapWebcam: require( "./src/webcams/ImageSnapWebcam.js" ),
-
-    WindowsWebcam: require( "./src/webcams/WindowsWebcam.js" )
-
+  WindowsWebcam: require("./src/webcams/WindowsWebcam.js"),
 };
 
-
 //API
-
-
 
 /**
  * Main create
@@ -44,13 +38,9 @@ var NodeWebcam = {
  *
  */
 
-NodeWebcam.create = function( options ) {
-
-    return NodeWebcam.Factory.create( options );
-
+NodeWebcam.create = function (options) {
+  return NodeWebcam.Factory.create(options);
 };
-
-
 
 /**
  * Quick capture helper
@@ -63,16 +53,13 @@ NodeWebcam.create = function( options ) {
  *
  */
 
-NodeWebcam.capture = function( location, options, callback ) {
+NodeWebcam.capture = function (location, options, callback) {
+  var webcam = NodeWebcam.create(options);
 
-    var webcam = NodeWebcam.create( options );
+  webcam.capture(location, callback);
 
-    webcam.capture( location, callback );
-
-    return webcam;
-
+  return webcam;
 };
-
 
 /**
  * Camera list helper
@@ -83,12 +70,10 @@ NodeWebcam.capture = function( location, options, callback ) {
  *
  */
 
-NodeWebcam.list = function( callback ) {
+NodeWebcam.list = function (callback) {
+  var cam = NodeWebcam.create({});
 
-    var cam = NodeWebcam.create({});
-
-    cam.list(callback);
-
+  cam.list(callback);
 };
 
 /**
@@ -112,14 +97,11 @@ NodeWebcam.list = function( callback ) {
  *
  */
 
-NodeWebcam.listControls = function( device, callback ) {
+NodeWebcam.listControls = function (device, callback) {
+  var cam = NodeWebcam.create({ device });
 
-    var cam = NodeWebcam.create({device});
-
-    cam.listControls(callback);
-
+  cam.listControls(callback);
 };
-
 
 //Export
 
