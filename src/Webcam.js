@@ -245,7 +245,7 @@ Webcam.prototype = {
             maxBuffer: 1024 * 10000
         };
 
-        EXEC( sh, shArgs, function( err, out, derr ) {
+        EXEC( sh, shArgs, function( err, out, derr ) { 
 
             if( err ) {
 

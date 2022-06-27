@@ -10,10 +10,14 @@ Cross platform webcam usage
 
 ```
 #Linux relies on fswebcam currently
-#Tested on ubuntu
+#ubuntu
 
 sudo apt-get install fswebcam
 
+#arch
+#fswebcam requires a build from the AUR, it is not listed for installation on pacman/pamac
+
+sudo pamac build fswebcam
 ```
 
 ### Mac OSX
