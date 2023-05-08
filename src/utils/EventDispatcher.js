@@ -3,7 +3,7 @@
  * Used primarily as an inheritance via apply
  *
  */
-EventDispatcher = function() {};
+var EventDispatcher = function() {};
 
 EventDispatcher.prototype = {
 
