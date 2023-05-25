@@ -167,7 +167,9 @@ NodeWebcam.capture( "test_picture", opts, function( err, data ) {
 
 --location Location to output webcam capture
 
---list list available camera devices
+--list list available cameras
+
+--driverType which backend to use (fswebcam, gphoto2, etc...)
 
 
 #Shorthand options
@@ -194,6 +196,18 @@ l: [ "--location" ]
 node-webcam --w 500 --h 500 --d 2 --l picture # ./bin/node-webcam.js
 
 ```
+
+
+## Usage with actual camera
+
+Install `gphoto2`. You might need to do [this on linux if you find it does not work](https://gist.github.com/chuckfairy/56587cac70035cb611e1c97eeb59353a)
+
+```shell
+node-webcam --driverType "gphoto2" --list # list available cameras
+
+node-webcam --driverType "gphoto2" --l ./test/output/test.png # `l` being the location
+```
+
 
 # Generated Documentation
 

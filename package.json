@@ -18,7 +18,8 @@
         "capture",
         "cli",
         "camera",
-        "webcamera"
+        "webcamera",
+        "gphoto2"
     ],
     "author": {
         "name": "chuckfairy",
