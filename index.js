@@ -41,12 +41,13 @@ var NodeWebcam = {
  * @method create
  *
  * @param {Object} options
+ * @param {String|Null} type of webcam or platform default
  *
  */
 
-NodeWebcam.create = function( options ) {
+NodeWebcam.create = function( options, type ) {
 
-    return NodeWebcam.Factory.create( options );
+    return NodeWebcam.Factory.create( options, type );
 
 };
 

@@ -291,6 +291,13 @@ First param of callback will be a possible error or null. Second will return the
 
 Get base 64 of shot number or data already grabbed from FS.
 
+
+### Webcam.record( options, callback )
+
+callback mainly for errors
+
+
+
 ## [FSWebcam](https://github.com/chuckfairy/node-webcam/blob/master/src/webcams/FSWebcam.js)
 
 Uses the fswebcam program. Available in linux (apt-get install fswebcam). Extra program addons provided in options.
@@ -304,6 +311,57 @@ var opts = {};
 
 var cam = new FSWebcam( opts );
 ```
+
+
+## [VLCWebcam](https://github.com/chuckfairy/node-webcam/blob/master/src/webcams/VLCWebcam.js)
+
+Not too much control and pretty new to the project. `stopRecording` will not work, something with how it creates child processes. Use `options.time` parameter for a length of time. See
+
+- [examples/rtmp-with-node-media-server/App.js](https://github.com/chuckfairy/node-webcam/blob/master/examples/rtmp-with-node-media-server/App.js)
+- [examples/recording-to-file/App.js](https://github.com/chuckfairy/node-webcam/blob/master/examples/recording-to-file/App.js)
+
+
+### Extra options
+
+```javascript
+VLCWebcam.Defaults = {
+
+    vcodec: "h264",
+    //vcodec: "x264{keyint=60,idrint=2},vcodec=h264",
+    //vcodec: "flv",
+    //vcodec: "FLV1",
+    //vcodec: "mp4",
+
+    acodec: "mp4a",
+    //acodec: "none",
+
+    samplerate: 22100,
+
+    videoOutput: "rtmp",
+    //videoOutput: "file",
+
+    streamPort: 8082,
+    streamPath: "rtmp://localhost:1935/live/stream",
+
+    width: "",
+
+    heigth: "",
+
+    useAudio: true,
+
+    fps: 60,
+
+    //httpMime: "video/x-ms-wmv",
+    httpMime: "video/flv",
+    //httpMime: "video/ogg",
+    //httpMime: "video/mp4",
+
+    mux: "asf"
+    //mux: "ogg"
+
+};
+```
+
 
 # What's next?
 
