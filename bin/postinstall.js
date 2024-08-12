@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-const https = require('https');
-const fs = require('fs');
-const os = require( "os" );
+const https = require("https");
+const fs = require("fs");
+const os = require("os");
 const config = require("../package.json");
 
 const tag = "v0.6";
@@ -9,32 +9,35 @@ const tag = "v0.6";
 init();
 
 function init() {
-	//Windows check
-	if (!os.platform().match(/win/)) {
-		return;
-	}
+    //Windows check
+    const platform = os.platform();
 
-	//Bindings path
-	const file = fs.createWriteStream("src/bindings/CommandCam/CommandCam.exe");
+    if (platform !== "win32") {
+        console.log("Not Windows, skipping download");
+        return;
+    }
 
-	//Github release url create
-	const repo = config.author.name + "/" + config.name;
-	const url = "https://github.com/" + repo + "/releases/download/" + tag + "/CommandCam.exe";
+    //Bindings path
+    const file = fs.createWriteStream("src/bindings/CommandCam/CommandCam.exe");
 
-	//Download exe release
-	console.log("Downloading " + url);
-	makeRequest(url);
+    //Github release url create
+    const repo = config.author.name + "/" + config.name;
+    const url = "https://github.com/" + repo + "/releases/download/" + tag + "/CommandCam.exe";
 
-	function makeRequest(url) {
-		https.get(url, function(response) {
-			if (response.statusCode == 302) {
-				console.log("Redirecting " + response.headers.location);
-				makeRequest(response.headers.location);
-				return;
-			}
+    //Download exe release
+    console.log("Downloading " + url);
+    makeRequest(url);
 
-			console.log("Downloaded Windows file " + file.path);
-			response.pipe(file);
-		});
-	}
+    function makeRequest(url) {
+        https.get(url, function (response) {
+            if (response.statusCode == 302) {
+                console.log("Redirecting " + response.headers.location);
+                makeRequest(response.headers.location);
+                return;
+            }
+
+            console.log("Downloaded Windows file " + file.path);
+            response.pipe(file);
+        });
+    }
 }
